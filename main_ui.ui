@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1200</width>
+    <width>1197</width>
     <height>900</height>
    </rect>
   </property>
@@ -14,6 +14,103 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true">/* General Styles */
+* {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 9pt;
+    color: #333;
+}
+
+/* QLabel Styles for better visibility */
+QLabel {
+    color: #555;
+    font-weight: bold; /* Make labels stand out */
+}
+
+/* QGroupBox Styles for Augmentation and Transformation Boxes */
+QGroupBox {
+    border: 1px solid #adb5bd;
+    border-radius: 5px;
+    margin-top: 1ex; /* Space above the group box */
+    padding: 10px; /* Padding inside the group box */
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    subcontrol-position: top left; /* Position at the top left */
+    padding: 0 3px;
+    background-color: #e9ecef;
+    border-radius: 3px;
+}
+
+/* QToolButton Styles */
+QToolButton {
+    background-color: #f0f0f0;
+    border: none;
+    padding: 4px;
+}
+
+QToolButton:hover {
+    background-color: #e1e1e1;
+}
+
+/* QComboBox Styles */
+QComboBox {
+    border: 1px solid #ccc;
+    padding: 2px 5px;
+}
+
+/* QWidget Styles */
+QWidget {
+    background-color: #fff;
+}
+
+/* Specific Widget Styles */
+#toolBox, #comboBox {
+    background-color: #e7ecf0;
+    border: 1px solid #d3d8de;
+    border-radius: 4px;
+}
+
+#apply_changes {
+    border-radius: 4px;
+    padding: 6px 12px;
+}
+
+#apply_changes:hover {
+    background-color: #4a8cc7;
+}
+
+
+QSlider::groove:horizontal {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #a5c8e7, stop:1 #a5c8e7);
+    border: none;
+    height: 6px;
+    border-radius: 3px;
+}
+
+QSlider::handle:horizontal {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #2e6da4, stop:1 #4a90d5);
+    border: 1px solid #1e4f71;
+    width: 14px;
+    margin-top: -5px; /* Adjusted to only affect top margin */
+    margin-bottom: -5px; /* Adjusted to only affect bottom margin */
+    border-radius: 7px;
+}
+
+QSlider::add-page:horizontal {
+    background: #a5c8e7;
+    border: 1px solid #1e4f71;
+    border-radius: 3px;
+}
+
+QSlider::sub-page:horizontal {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #2e6da4, stop:1 #a5c8e7);
+    border: 1px solid #1e4f71;
+    border-radius: 3px;
+}</string>
+   </property>
    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
     <property name="spacing">
      <number>0</number>
@@ -83,6 +180,12 @@
            <height>16777215</height>
           </size>
          </property>
+         <property name="font">
+          <font>
+           <family>Segoe UI</family>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
          <property name="frameShape">
           <enum>QFrame::Panel</enum>
          </property>
@@ -136,8 +239,8 @@
               <widget class="QLabel" name="title">
                <property name="font">
                 <font>
-                 <family>SAP-icons</family>
-                 <pointsize>17</pointsize>
+                 <family>Segoe UI</family>
+                 <pointsize>9</pointsize>
                  <bold>true</bold>
                  <underline>false</underline>
                  <strikeout>false</strikeout>
@@ -176,7 +279,8 @@
                </property>
                <property name="font">
                 <font>
-                 <pointsize>11</pointsize>
+                 <family>Segoe UI</family>
+                 <pointsize>9</pointsize>
                 </font>
                </property>
                <property name="accessibleName">
@@ -188,19 +292,20 @@
 	</string>
                </property>
                <property name="currentIndex">
-                <number>2</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="Augmentation">
                 <property name="geometry">
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>226</width>
-                  <height>198</height>
+                  <width>224</width>
+                  <height>208</height>
                  </rect>
                 </property>
                 <property name="font">
                  <font>
+                  <family>Segoe UI</family>
                   <pointsize>9</pointsize>
                  </font>
                 </property>
@@ -218,7 +323,8 @@
                    </property>
                    <property name="font">
                     <font>
-                     <pointsize>10</pointsize>
+                     <family>Segoe UI</family>
+                     <pointsize>9</pointsize>
                     </font>
                    </property>
                    <property name="text">
@@ -242,7 +348,8 @@
                    </property>
                    <property name="font">
                     <font>
-                     <pointsize>10</pointsize>
+                     <family>Segoe UI</family>
+                     <pointsize>9</pointsize>
                     </font>
                    </property>
                    <property name="text">
@@ -260,7 +367,8 @@
                    </property>
                    <property name="font">
                     <font>
-                     <pointsize>10</pointsize>
+                     <family>Segoe UI</family>
+                     <pointsize>9</pointsize>
                     </font>
                    </property>
                    <property name="text">
@@ -275,8 +383,8 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>226</width>
-                  <height>198</height>
+                  <width>224</width>
+                  <height>208</height>
                  </rect>
                 </property>
                 <attribute name="label">
@@ -293,7 +401,8 @@
                    </property>
                    <property name="font">
                     <font>
-                     <pointsize>10</pointsize>
+                     <family>Segoe UI</family>
+                     <pointsize>9</pointsize>
                     </font>
                    </property>
                    <property name="text">
@@ -317,7 +426,8 @@
                    </property>
                    <property name="font">
                     <font>
-                     <pointsize>10</pointsize>
+                     <family>Segoe UI</family>
+                     <pointsize>9</pointsize>
                     </font>
                    </property>
                    <property name="text">
@@ -335,7 +445,8 @@
                    </property>
                    <property name="font">
                     <font>
-                     <pointsize>10</pointsize>
+                     <family>Segoe UI</family>
+                     <pointsize>9</pointsize>
                     </font>
                    </property>
                    <property name="text">
@@ -350,8 +461,8 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>226</width>
-                  <height>198</height>
+                  <width>224</width>
+                  <height>208</height>
                  </rect>
                 </property>
                 <attribute name="label">
@@ -368,7 +479,8 @@
                    </property>
                    <property name="font">
                     <font>
-                     <pointsize>10</pointsize>
+                     <family>Segoe UI</family>
+                     <pointsize>9</pointsize>
                     </font>
                    </property>
                    <property name="text">
@@ -379,6 +491,12 @@
                      <width>16</width>
                      <height>16</height>
                     </size>
+                   </property>
+                   <property name="checkable">
+                    <bool>false</bool>
+                   </property>
+                   <property name="flat">
+                    <bool>false</bool>
                    </property>
                   </widget>
                  </item>
@@ -392,7 +510,8 @@
                    </property>
                    <property name="font">
                     <font>
-                     <pointsize>10</pointsize>
+                     <family>Segoe UI</family>
+                     <pointsize>9</pointsize>
                     </font>
                    </property>
                    <property name="text">
@@ -410,7 +529,8 @@
                    </property>
                    <property name="font">
                     <font>
-                     <pointsize>10</pointsize>
+                     <family>Segoe UI</family>
+                     <pointsize>9</pointsize>
                     </font>
                    </property>
                    <property name="text">
@@ -420,74 +540,6 @@
                  </item>
                 </layout>
                </widget>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item alignment="Qt::AlignBottom">
-           <widget class="QFrame" name="frame_22">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>40</height>
-             </size>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::Panel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_16">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>7</number>
-             </property>
-             <item alignment="Qt::AlignHCenter">
-              <widget class="QPushButton" name="setting">
-               <property name="font">
-                <font>
-                 <pointsize>10</pointsize>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string> SETTINGS</string>
-               </property>
-               <property name="icon">
-                <iconset resource="svg/icons.qrc">
-                 <normaloff>:/icons/185095_settings_icon.svg</normaloff>:/icons/185095_settings_icon.svg</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>25</width>
-                 <height>25</height>
-                </size>
-               </property>
-               <property name="autoExclusive">
-                <bool>false</bool>
-               </property>
-               <property name="autoDefault">
-                <bool>false</bool>
-               </property>
-               <property name="default">
-                <bool>false</bool>
-               </property>
-               <property name="flat">
-                <bool>true</bool>
-               </property>
               </widget>
              </item>
             </layout>
@@ -511,46 +563,44 @@
              <enum>QFrame::Panel</enum>
             </property>
             <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
+             <enum>QFrame::Sunken</enum>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_4">
+            <property name="lineWidth">
+             <number>1</number>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_16">
              <property name="spacing">
               <number>0</number>
              </property>
              <property name="leftMargin">
-              <number>0</number>
+              <number>10</number>
              </property>
              <property name="topMargin">
-              <number>5</number>
+              <number>3</number>
              </property>
              <property name="rightMargin">
-              <number>0</number>
+              <number>10</number>
              </property>
              <property name="bottomMargin">
-              <number>0</number>
+              <number>3</number>
              </property>
              <item alignment="Qt::AlignHCenter">
-              <widget class="QLabel" name="logo">
-               <property name="maximumSize">
+              <widget class="QToolButton" name="setting">
+               <property name="text">
+                <string>SETTINGS</string>
+               </property>
+               <property name="icon">
+                <iconset resource="svg/icons.qrc">
+                 <normaloff>:/icons/185095_settings_icon.svg</normaloff>:/icons/185095_settings_icon.svg</iconset>
+               </property>
+               <property name="iconSize">
                 <size>
-                 <width>80</width>
-                 <height>40</height>
+                 <width>32</width>
+                 <height>32</height>
                 </size>
                </property>
-               <property name="layoutDirection">
-                <enum>Qt::LeftToRight</enum>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="pixmap">
-                <pixmap resource="svg/icons.qrc">:/icons/logo.svg</pixmap>
-               </property>
-               <property name="scaledContents">
+               <property name="autoRaise">
                 <bool>true</bool>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
                </property>
               </widget>
              </item>
@@ -695,7 +745,7 @@
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="0,0,0,0,0,0,0,0,0,0,0">
              <property name="spacing">
-              <number>0</number>
+              <number>15</number>
              </property>
              <property name="leftMargin">
               <number>0</number>
@@ -802,15 +852,12 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="upload_mask">
-               <property name="mouseTracking">
-                <bool>false</bool>
-               </property>
-               <property name="accessibleDescription">
-                <string>abc</string>
+              <widget class="QToolButton" name="upload_mask">
+               <property name="toolTip">
+                <string>Upload a mask </string>
                </property>
                <property name="text">
-                <string/>
+                <string>...</string>
                </property>
                <property name="icon">
                 <iconset resource="svg/icons.qrc">
@@ -818,19 +865,19 @@
                </property>
                <property name="iconSize">
                 <size>
-                 <width>28</width>
-                 <height>32</height>
+                 <width>25</width>
+                 <height>25</height>
                 </size>
                </property>
-               <property name="flat">
+               <property name="autoRaise">
                 <bool>true</bool>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_8">
+              <widget class="QToolButton" name="toolButton_2">
                <property name="text">
-                <string/>
+                <string>...</string>
                </property>
                <property name="icon">
                 <iconset resource="svg/icons.qrc">
@@ -838,19 +885,19 @@
                </property>
                <property name="iconSize">
                 <size>
-                 <width>32</width>
-                 <height>28</height>
+                 <width>25</width>
+                 <height>25</height>
                 </size>
                </property>
-               <property name="flat">
+               <property name="autoRaise">
                 <bool>true</bool>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_15">
+              <widget class="QToolButton" name="toolButton_3">
                <property name="text">
-                <string/>
+                <string>...</string>
                </property>
                <property name="icon">
                 <iconset resource="svg/icons.qrc">
@@ -858,19 +905,22 @@
                </property>
                <property name="iconSize">
                 <size>
-                 <width>32</width>
-                 <height>28</height>
+                 <width>25</width>
+                 <height>25</height>
                 </size>
                </property>
-               <property name="flat">
+               <property name="autoRaise">
                 <bool>true</bool>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="upload_bbox">
+              <widget class="QToolButton" name="toolButton_4">
+               <property name="toolTip">
+                <string>Upload a bounding box</string>
+               </property>
                <property name="text">
-                <string/>
+                <string>...</string>
                </property>
                <property name="icon">
                 <iconset resource="svg/icons.qrc">
@@ -878,19 +928,19 @@
                </property>
                <property name="iconSize">
                 <size>
-                 <width>32</width>
-                 <height>28</height>
+                 <width>25</width>
+                 <height>25</height>
                 </size>
                </property>
-               <property name="flat">
+               <property name="autoRaise">
                 <bool>true</bool>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_7">
+              <widget class="QToolButton" name="toolButton_5">
                <property name="text">
-                <string/>
+                <string>...</string>
                </property>
                <property name="icon">
                 <iconset resource="svg/icons.qrc">
@@ -898,19 +948,19 @@
                </property>
                <property name="iconSize">
                 <size>
-                 <width>32</width>
-                 <height>28</height>
+                 <width>25</width>
+                 <height>25</height>
                 </size>
                </property>
-               <property name="flat">
+               <property name="autoRaise">
                 <bool>true</bool>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_14">
+              <widget class="QToolButton" name="toolButton_6">
                <property name="text">
-                <string/>
+                <string>...</string>
                </property>
                <property name="icon">
                 <iconset resource="svg/icons.qrc">
@@ -918,19 +968,19 @@
                </property>
                <property name="iconSize">
                 <size>
-                 <width>32</width>
-                 <height>30</height>
+                 <width>25</width>
+                 <height>25</height>
                 </size>
                </property>
-               <property name="flat">
+               <property name="autoRaise">
                 <bool>true</bool>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_13">
+              <widget class="QToolButton" name="toolButton_7">
                <property name="text">
-                <string/>
+                <string>...</string>
                </property>
                <property name="icon">
                 <iconset resource="svg/icons.qrc">
@@ -938,11 +988,11 @@
                </property>
                <property name="iconSize">
                 <size>
-                 <width>32</width>
-                 <height>28</height>
+                 <width>25</width>
+                 <height>25</height>
                 </size>
                </property>
-               <property name="flat">
+               <property name="autoRaise">
                 <bool>true</bool>
                </property>
               </widget>
@@ -1106,7 +1156,8 @@
                 </property>
                 <property name="font">
                  <font>
-                  <pointsize>11</pointsize>
+                  <family>Segoe UI</family>
+                  <pointsize>9</pointsize>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -1119,7 +1170,8 @@
                <widget class="QComboBox" name="comboBox">
                 <property name="font">
                  <font>
-                  <pointsize>11</pointsize>
+                  <family>Segoe UI</family>
+                  <pointsize>9</pointsize>
                  </font>
                 </property>
                 <item>
@@ -1167,14 +1219,335 @@
               <item>
                <widget class="QStackedWidget" name="param_stack">
                 <property name="currentIndex">
-                 <number>5</number>
+                 <number>3</number>
                 </property>
-                <widget class="QWidget" name="crop_2"/>
-                <widget class="QWidget" name="rotate_2"/>
-                <widget class="QWidget" name="vflip_2"/>
-                <widget class="QWidget" name="noise_2"/>
-                <widget class="QWidget" name="solarize_2"/>
-                <widget class="QWidget" name="blur_2">
+                <widget class="QWidget" name="crop">
+                 <layout class="QVBoxLayout" name="verticalLayout_31">
+                  <item>
+                   <layout class="QVBoxLayout" name="cropLayout" stretch="0,0,0,0">
+                    <property name="spacing">
+                     <number>45</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>45</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="label_14">
+                      <property name="font">
+                       <font>
+                        <family>Segoe UI</family>
+                        <pointsize>9</pointsize>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Xmin and Xmax</string>
+                      </property>
+                      <property name="indent">
+                       <number>10</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QSlider" name="width">
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="cursor">
+                       <cursorShape>ArrowCursor</cursorShape>
+                      </property>
+                      <property name="acceptDrops">
+                       <bool>false</bool>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="value">
+                       <number>10</number>
+                      </property>
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_15">
+                      <property name="font">
+                       <font>
+                        <family>Segoe UI</family>
+                        <pointsize>9</pointsize>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Ymin and Ymax</string>
+                      </property>
+                      <property name="indent">
+                       <number>10</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QSlider" name="height">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </widget>
+                <widget class="QWidget" name="rotate">
+                 <layout class="QVBoxLayout" name="verticalLayout_29">
+                  <property name="spacing">
+                   <number>45</number>
+                  </property>
+                  <property name="leftMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>45</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>0</number>
+                  </property>
+                  <item>
+                   <layout class="QVBoxLayout" name="rotateLayout" stretch="0,0,0,0">
+                    <property name="spacing">
+                     <number>45</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>45</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="label_12">
+                      <property name="font">
+                       <font>
+                        <family>Segoe UI</family>
+                        <pointsize>9</pointsize>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Rotate limit</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QSlider" name="rotate_limit">
+                      <property name="minimum">
+                       <number>-360</number>
+                      </property>
+                      <property name="maximum">
+                       <number>360</number>
+                      </property>
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_13">
+                      <property name="font">
+                       <font>
+                        <family>Segoe UI</family>
+                        <pointsize>9</pointsize>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Border mode</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QComboBox" name="rotate_options">
+                      <property name="font">
+                       <font>
+                        <family>Segoe UI</family>
+                        <pointsize>9</pointsize>
+                       </font>
+                      </property>
+                      <property name="toolTipDuration">
+                       <number>-1</number>
+                      </property>
+                      <item>
+                       <property name="text">
+                        <string>Constant</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>Replicate</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>Reflect</string>
+                       </property>
+                      </item>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </widget>
+                <widget class="QWidget" name="vflip">
+                 <layout class="QVBoxLayout" name="verticalLayout_25">
+                  <item>
+                   <widget class="QLabel" name="label_6">
+                    <property name="font">
+                     <font>
+                      <family>Segoe UI</family>
+                      <pointsize>9</pointsize>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Transformation has no parameters</string>
+                    </property>
+                    <property name="indent">
+                     <number>0</number>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+                <widget class="QWidget" name="noise">
+                 <layout class="QVBoxLayout" name="verticalLayout_27">
+                  <item>
+                   <layout class="QVBoxLayout" name="noiseLayout">
+                    <property name="spacing">
+                     <number>45</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>45</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="label_8">
+                      <property name="font">
+                       <font>
+                        <family>Segoe UI</family>
+                        <pointsize>9</pointsize>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Variable limit</string>
+                      </property>
+                      <property name="indent">
+                       <number>10</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QSlider" name="var_limit">
+                      <property name="layoutDirection">
+                       <enum>Qt::LeftToRight</enum>
+                      </property>
+                      <property name="autoFillBackground">
+                       <bool>false</bool>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="maximum">
+                       <number>500</number>
+                      </property>
+                      <property name="pageStep">
+                       <number>1</number>
+                      </property>
+                      <property name="value">
+                       <number>0</number>
+                      </property>
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="invertedAppearance">
+                       <bool>false</bool>
+                      </property>
+                      <property name="invertedControls">
+                       <bool>false</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_11">
+                      <property name="font">
+                       <font>
+                        <family>Segoe UI</family>
+                        <pointsize>9</pointsize>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Mean value</string>
+                      </property>
+                      <property name="indent">
+                       <number>10</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QSlider" name="mean_value">
+                      <property name="minimum">
+                       <number>-100</number>
+                      </property>
+                      <property name="maximum">
+                       <number>100</number>
+                      </property>
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </widget>
+                <widget class="QWidget" name="solarize">
+                 <layout class="QVBoxLayout" name="verticalLayout_23">
+                  <item>
+                   <layout class="QVBoxLayout" name="solarizeLayout">
+                    <property name="spacing">
+                     <number>45</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>45</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="label">
+                      <property name="font">
+                       <font>
+                        <family>Segoe UI</family>
+                        <pointsize>9</pointsize>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Threshold</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QSlider" name="solarize_value">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </widget>
+                <widget class="QWidget" name="blur">
                  <layout class="QVBoxLayout" name="verticalLayout_17">
                   <property name="spacing">
                    <number>0</number>
@@ -1192,23 +1565,52 @@
                    <number>0</number>
                   </property>
                   <item>
-                   <layout class="QVBoxLayout" name="verticalLayout_16">
+                   <layout class="QVBoxLayout" name="blurLayout">
+                    <property name="spacing">
+                     <number>45</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>45</number>
+                    </property>
                     <item>
                      <widget class="QLabel" name="label_3">
                       <property name="font">
                        <font>
-                        <pointsize>11</pointsize>
+                        <family>Segoe UI</family>
+                        <pointsize>9</pointsize>
+                        <bold>true</bold>
                        </font>
                       </property>
                       <property name="text">
-                       <string>TextLabel</string>
+                       <string>Max factor</string>
+                      </property>
+                      <property name="indent">
+                       <number>10</number>
                       </property>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QSlider" name="horizontalSlider">
+                     <widget class="QSlider" name="max_factor">
+                      <property name="minimum">
+                       <number>1</number>
+                      </property>
+                      <property name="maximum">
+                       <number>10</number>
+                      </property>
+                      <property name="singleStep">
+                       <number>1</number>
+                      </property>
+                      <property name="pageStep">
+                       <number>1</number>
+                      </property>
+                      <property name="value">
+                       <number>1</number>
+                      </property>
                       <property name="orientation">
                        <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="tickInterval">
+                       <number>0</number>
                       </property>
                      </widget>
                     </item>
@@ -1216,16 +1618,33 @@
                      <widget class="QLabel" name="label_4">
                       <property name="font">
                        <font>
-                        <pointsize>11</pointsize>
+                        <family>Segoe UI</family>
+                        <pointsize>9</pointsize>
+                        <bold>true</bold>
                        </font>
                       </property>
                       <property name="text">
-                       <string>TextLabel</string>
+                       <string>Step factor</string>
+                      </property>
+                      <property name="indent">
+                       <number>10</number>
                       </property>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QSlider" name="horizontalSlider_2">
+                     <widget class="QSlider" name="step_factor">
+                      <property name="minimum">
+                       <number>1</number>
+                      </property>
+                      <property name="maximum">
+                       <number>10</number>
+                      </property>
+                      <property name="pageStep">
+                       <number>1</number>
+                      </property>
+                      <property name="sliderPosition">
+                       <number>1</number>
+                      </property>
                       <property name="orientation">
                        <enum>Qt::Horizontal</enum>
                       </property>
@@ -1235,8 +1654,77 @@
                   </item>
                  </layout>
                 </widget>
-                <widget class="QWidget" name="resize_2"/>
-                <widget class="QWidget" name="hflip_2"/>
+                <widget class="QWidget" name="resize">
+                 <layout class="QVBoxLayout" name="verticalLayout_33">
+                  <item>
+                   <layout class="QVBoxLayout" name="resizeLayout" stretch="10,10,10,10">
+                    <item>
+                     <widget class="QLabel" name="label_16">
+                      <property name="font">
+                       <font>
+                        <family>Segoe UI</family>
+                        <pointsize>9</pointsize>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Width</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QSlider" name="width_resize">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_17">
+                      <property name="font">
+                       <font>
+                        <family>Segoe UI</family>
+                        <pointsize>9</pointsize>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Height</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QSlider" name="height_resize">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </widget>
+                <widget class="QWidget" name="hflip">
+                 <layout class="QVBoxLayout" name="verticalLayout_24">
+                  <item alignment="Qt::AlignVCenter">
+                   <widget class="QLabel" name="label_2">
+                    <property name="font">
+                     <font>
+                      <family>Segoe UI</family>
+                      <pointsize>9</pointsize>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Transformation has no parameters</string>
+                    </property>
+                    <property name="indent">
+                     <number>10</number>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
                </widget>
               </item>
              </layout>
@@ -1247,7 +1735,7 @@
           <item>
            <widget class="QStackedWidget" name="display_stack">
             <property name="currentIndex">
-             <number>1</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="obj_cls">
              <layout class="QVBoxLayout" name="verticalLayout_10">
@@ -1286,6 +1774,12 @@
                     </property>
                     <item>
                      <widget class="QLabel" name="img_original_oc">
+                      <property name="frameShape">
+                       <enum>QFrame::NoFrame</enum>
+                      </property>
+                      <property name="lineWidth">
+                       <number>1</number>
+                      </property>
                       <property name="text">
                        <string/>
                       </property>
@@ -1331,7 +1825,9 @@
                      <widget class="QLabel" name="label_5">
                       <property name="font">
                        <font>
-                        <pointsize>10</pointsize>
+                        <family>Segoe UI</family>
+                        <pointsize>9</pointsize>
+                        <bold>true</bold>
                        </font>
                       </property>
                       <property name="text">
@@ -1425,7 +1921,9 @@
                      <widget class="QLabel" name="label_7">
                       <property name="font">
                        <font>
-                        <pointsize>10</pointsize>
+                        <family>Segoe UI</family>
+                        <pointsize>9</pointsize>
+                        <bold>true</bold>
                        </font>
                       </property>
                       <property name="text">
@@ -1479,6 +1977,12 @@
                     <enum>QFrame::Raised</enum>
                    </property>
                    <layout class="QHBoxLayout" name="horizontalLayout_13">
+                    <property name="topMargin">
+                     <number>50</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>10</number>
+                    </property>
                     <item>
                      <widget class="QFrame" name="frame_23">
                       <property name="frameShape">
@@ -1558,6 +2062,13 @@
                     </property>
                     <item alignment="Qt::AlignHCenter">
                      <widget class="QLabel" name="label_9">
+                      <property name="font">
+                       <font>
+                        <family>Segoe UI</family>
+                        <pointsize>9</pointsize>
+                        <bold>true</bold>
+                       </font>
+                      </property>
                       <property name="text">
                        <string>ORIGINAL</string>
                       </property>
@@ -1602,6 +2113,12 @@
                     <enum>QFrame::Raised</enum>
                    </property>
                    <layout class="QHBoxLayout" name="horizontalLayout_14">
+                    <property name="topMargin">
+                     <number>50</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>10</number>
+                    </property>
                     <item>
                      <widget class="QFrame" name="frame_25">
                       <property name="frameShape">
@@ -1681,6 +2198,13 @@
                     </property>
                     <item alignment="Qt::AlignHCenter">
                      <widget class="QLabel" name="label_10">
+                      <property name="font">
+                       <font>
+                        <family>Segoe UI</family>
+                        <pointsize>9</pointsize>
+                        <bold>true</bold>
+                       </font>
+                      </property>
                       <property name="text">
                        <string>TRANSFORMED</string>
                       </property>
@@ -1714,7 +2238,7 @@
           </size>
          </property>
          <property name="frameShape">
-          <enum>QFrame::Box</enum>
+          <enum>QFrame::NoFrame</enum>
          </property>
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
@@ -1765,7 +2289,7 @@
              <property name="bottomMargin">
               <number>0</number>
              </property>
-             <item>
+             <item alignment="Qt::AlignTop">
               <widget class="QPushButton" name="apply_changes">
                <property name="minimumSize">
                 <size>
@@ -1773,12 +2297,31 @@
                  <height>40</height>
                 </size>
                </property>
+               <property name="font">
+                <font>
+                 <family>Segoe UI</family>
+                 <pointsize>9</pointsize>
+                 <bold>true</bold>
+                </font>
+               </property>
                <property name="text">
                 <string> Apply changes</string>
                </property>
                <property name="icon">
                 <iconset resource="svg/icons.qrc">
                  <normaloff>:/icons/2638314_arrow_scale_sign_square_symbol_icon.svg</normaloff>:/icons/2638314_arrow_scale_sign_square_symbol_icon.svg</iconset>
+               </property>
+               <property name="autoExclusive">
+                <bool>false</bool>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+               <property name="default">
+                <bool>true</bool>
+               </property>
+               <property name="flat">
+                <bool>false</bool>
                </property>
               </widget>
              </item>
@@ -1798,7 +2341,8 @@
               <widget class="QLabel" name="state_label">
                <property name="font">
                 <font>
-                 <pointsize>11</pointsize>
+                 <family>Segoe UI</family>
+                 <pointsize>9</pointsize>
                  <bold>true</bold>
                 </font>
                </property>
