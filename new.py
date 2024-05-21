@@ -20,6 +20,10 @@ class MainWindow_UI(QMainWindow):
         self.algorithms = Algorithm()
         self.mode = 1
         self.view = 1
+        self.base_img = ''
+        self.image_file = ''
+        self.rootdir = ''
+        self.percentage = 100
         self.setup()
         self.controlMainStack()
         self.buttonControl()
@@ -34,6 +38,7 @@ class MainWindow_UI(QMainWindow):
         self.shadow.setColor(QColor(0,92,157,550))
         self.ui.centralwidget.setGraphicsEffect(self.shadow)
 
+        self.ui.transform_stack.setCurrentIndex(1)
         self.ui.param_stack.setCurrentIndex(1)
         self.ui.display_stack.setCurrentIndex(0)
 
@@ -130,13 +135,13 @@ class MainWindow_UI(QMainWindow):
             self.mode = 6
         elif index == 7:
             self.ui.state_label.setText("Machine Learning for Classification")
-            self.ui.display_stack.setCurrentIndex(0)
-            self.ui.transform_stack.setCurrentIndex(1)
+            self.ui.display_stack.setCurrentIndex(2)
+            self.ui.transform_stack.setCurrentIndex(2)
             self.mode = 7
         elif index == 8:
             self.ui.state_label.setText("Machine Learning for Segmentation")
             self.ui.display_stack.setCurrentIndex(0)
-            self.ui.transform_stack.setCurrentIndex(1)
+            self.ui.transform_stack.setCurrentIndex(0)
             self.mode = 8
         elif index == 9:
             self.ui.state_label.setText("Machine Learning for Object Detection")
@@ -145,19 +150,20 @@ class MainWindow_UI(QMainWindow):
             self.mode = 9
 
     def viewHandle(self, index):
-
         if self.mode == 1:
             if index == 1:
                 self.ui.img_original_oc.setPixmap(self.pixmap_from_cv_image(self.base_img))
                 self.ui.img_result_oc.setPixmap(self.pixmap_from_cv_image(self.base_img))
             elif index == 2:
-                im_original = self.multi_image_viewer(dir=self.rootdir, col=3, row=2)
-                pixmap = self.pil2pixmap(im_original)
-                self.ui.img_original_oc.setPixmap(QPixmap(pixmap))
-
-                im_result = self.multi_image_viewer_transform(dir=self.rootdir, col=3, row=2)
-                pixmap = self.pil2pixmap(im_result)
-                self.ui.img_result_oc.setPixmap(QPixmap(pixmap))
+                if self.rootdir == '':
+                    QMessageBox.information(self, 'Error', 'Please upload a folder', QMessageBox.Ok)
+                else:
+                    im_original = self.multi_image_viewer(dir=self.rootdir, col=3, row=2)
+                    pixmap = self.pil2pixmap(im_original)
+                    self.ui.img_original_oc.setPixmap(QPixmap(pixmap))
+                    im_result = self.multi_image_viewer_transform(dir=self.rootdir, col=3, row=2)
+                    pixmap = self.pil2pixmap(im_result)
+                    self.ui.img_result_oc.setPixmap(QPixmap(pixmap))
 
     def setting(self):
         self.widget = QWidget()
@@ -232,19 +238,25 @@ class MainWindow_UI(QMainWindow):
             QMessageBox.information(self, 'Error', 'Unable to open folder', QMessageBox.Ok)
 
     def saveFolder(self):
-        self.widget = QWidget()
-        self.widget.setWindowTitle('Save Folder')
-        vbox = QVBoxLayout()
-        text = QLabel('How many percentages of the dataset you want to augument?')
-        vbox.addWidget(text)
-        self.slider = QLabeledSlider()
-        self.slider.setRange(1,100)
-        vbox.addWidget(self.slider)
-        button = QPushButton('Transform the folder')
-        vbox.addWidget(button)
-        self.widget.setLayout(vbox)
-        self.widget.show()
-        # button.clicked.connect(self.transform)
+        if self.rootdir == '':
+            QMessageBox.information(self, 'Error', 'Please upload a folder', QMessageBox.Ok)
+        else:
+            for subdir, dirs, files in os.walk(self.rootdir):
+                base_dir = os.path.dirname(self.rootdir)
+                os.mkdir(os.path.join(base_dir, 'transformed'))
+                total = len(files)
+                counter = float(self.percentage/100)*total
+                for file in files:
+                    counter = counter - 1 
+                    if counter < 0:
+                        break
+                    frame = cv2.imread(os.path.join(subdir, file))  
+                    original_filename = os.path.basename(os.path.join(subdir, file)).split('.')[0]
+                    custom_filename = f"{original_filename}_transformed.jpg"
+                    savedDir = os.path.join(base_dir, 'transformed', custom_filename)
+                    cv2.imwrite(savedDir, self.transformation(frame))
+                break
+            QMessageBox.information(self, 'Completed', 'Augmented folder has been saved', QMessageBox.Ok)
 
     def multi_image_viewer(self, dir: str, col: int, row: int):
     # Get a list of all image files in the folder
@@ -298,9 +310,12 @@ class MainWindow_UI(QMainWindow):
         return grid_image
 
     def responsive(self):
-        img = self.transformation(self.base_img)
-        self.pixmap = self.pixmap_from_cv_image(img)
-        self.ui.img_result_oc.setPixmap(self.pixmap)
+        if self.image_file == '':
+            QMessageBox.information(self, 'Error', 'Please upload an image', QMessageBox.Ok)
+        else:
+            img = self.transformation(self.base_img)
+            self.pixmap = self.pixmap_from_cv_image(img)
+            self.ui.img_result_oc.setPixmap(self.pixmap)
 
     def apply_changes(self):
         self.base_img = self.image_tranformed

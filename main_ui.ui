@@ -21,13 +21,36 @@
     font-size: 9pt;
     color: #333;
 }
-
 /* QLabel Styles for better visibility */
 QLabel {
     color: #555;
     font-weight: bold; /* Make labels stand out */
 }
 
+#result, #origin, #r_i_s_labels, #r_i_s_labels_2, #o_i_s_labels, #o_i_s_labels_2 {
+	border-top: 1px solid qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #2e6da4, stop:1 #a5c8e7); 
+	border-left: 1px solid qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #2e6da4, stop:1 #a5c8e7); 
+	border-right: 1px solid qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #2e6da4, stop:1 #a5c8e7); 
+	border-bottom: 1px solid qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #2e6da4, stop:1 #a5c8e7); 
+}
+#settings, #footer { 
+	border-top: 1px solid qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #2e6da4, stop:1 #a5c8e7); 
+	border-left: none; 
+	border-right: none; 
+	border-bottom: none; 
+}
+#titles, #toolbar { 
+	border-top: none; 
+	border-left: none; 
+	border-right: none; 
+	border-bottom: 1px solid qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #2e6da4, stop:1 #a5c8e7); 
+}
+#slide { 
+	border-top: none; 
+	border-left: none; 
+	border-right: 1px solid qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #2e6da4, stop:1 #a5c8e7); 
+	border-bottom: none; 
+}
 /* QGroupBox Styles for Augmentation and Transformation Boxes */
 QGroupBox {
     border: 1px solid #adb5bd;
@@ -35,7 +58,6 @@ QGroupBox {
     margin-top: 1ex; /* Space above the group box */
     padding: 10px; /* Padding inside the group box */
 }
-
 QGroupBox::title {
     subcontrol-origin: margin;
     subcontrol-position: top left; /* Position at the top left */
@@ -43,46 +65,33 @@ QGroupBox::title {
     background-color: #e9ecef;
     border-radius: 3px;
 }
-
 /* QToolButton Styles */
 QToolButton {
     background-color: #f0f0f0;
     border: none;
     padding: 4px;
 }
-
 QToolButton:hover {
     background-color: #e1e1e1;
 }
-
 /* QComboBox Styles */
 QComboBox {
     border: 1px solid #ccc;
     padding: 2px 5px;
 }
-
-/* QWidget Styles */
-QWidget {
-    background-color: #fff;
-}
-
 /* Specific Widget Styles */
-#toolBox, #comboBox {
+#toolBox, #comboBox, #comboBox_P {
     background-color: #e7ecf0;
     border: 1px solid #d3d8de;
     border-radius: 4px;
 }
-
 #apply_changes {
     border-radius: 4px;
     padding: 6px 12px;
 }
-
 #apply_changes:hover {
     background-color: #4a8cc7;
 }
-
-
 QSlider::groove:horizontal {
     background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #a5c8e7, stop:1 #a5c8e7);
     border: none;
@@ -98,13 +107,11 @@ QSlider::handle:horizontal {
     margin-bottom: -5px; /* Adjusted to only affect bottom margin */
     border-radius: 7px;
 }
-
 QSlider::add-page:horizontal {
     background: #a5c8e7;
     border: 1px solid #1e4f71;
     border-radius: 3px;
 }
-
 QSlider::sub-page:horizontal {
     background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #2e6da4, stop:1 #a5c8e7);
     border: 1px solid #1e4f71;
@@ -187,7 +194,7 @@ QSlider::sub-page:horizontal {
           </font>
          </property>
          <property name="frameShape">
-          <enum>QFrame::Panel</enum>
+          <enum>QFrame::StyledPanel</enum>
          </property>
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
@@ -215,7 +222,7 @@ QSlider::sub-page:horizontal {
            <number>0</number>
           </property>
           <item>
-           <widget class="QFrame" name="frame_4">
+           <widget class="QFrame" name="titles">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -287,19 +294,17 @@ QSlider::sub-page:horizontal {
                 <string/>
                </property>
                <property name="styleSheet">
-                <string notr="true">
-
-	</string>
+                <string notr="true"/>
                </property>
                <property name="currentIndex">
-                <number>0</number>
+                <number>2</number>
                </property>
                <widget class="QWidget" name="Augmentation">
                 <property name="geometry">
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>224</width>
+                  <width>225</width>
                   <height>208</height>
                  </rect>
                 </property>
@@ -383,7 +388,7 @@ QSlider::sub-page:horizontal {
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>224</width>
+                  <width>225</width>
                   <height>208</height>
                  </rect>
                 </property>
@@ -461,7 +466,7 @@ QSlider::sub-page:horizontal {
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>224</width>
+                  <width>225</width>
                   <height>208</height>
                  </rect>
                 </property>
@@ -546,7 +551,7 @@ QSlider::sub-page:horizontal {
            </widget>
           </item>
           <item>
-           <widget class="QFrame" name="frame_6">
+           <widget class="QFrame" name="settings">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -556,34 +561,42 @@ QSlider::sub-page:horizontal {
             <property name="maximumSize">
              <size>
               <width>248</width>
-              <height>40</height>
+              <height>80</height>
              </size>
             </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="frameShape">
-             <enum>QFrame::Panel</enum>
+             <enum>QFrame::StyledPanel</enum>
             </property>
             <property name="frameShadow">
-             <enum>QFrame::Sunken</enum>
+             <enum>QFrame::Raised</enum>
             </property>
             <property name="lineWidth">
-             <number>1</number>
+             <number>2</number>
             </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_16">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <property name="leftMargin">
-              <number>10</number>
-             </property>
-             <property name="topMargin">
-              <number>3</number>
-             </property>
-             <property name="rightMargin">
-              <number>10</number>
-             </property>
-             <property name="bottomMargin">
-              <number>3</number>
-             </property>
+            <property name="midLineWidth">
+             <number>0</number>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_4">
+             <item alignment="Qt::AlignHCenter">
+              <widget class="QToolButton" name="toolButton">
+               <property name="text">
+                <string>...</string>
+               </property>
+               <property name="icon">
+                <iconset resource="svg/icons.qrc">
+                 <normaloff>:/icons/bell-svgrepo-com.svg</normaloff>:/icons/bell-svgrepo-com.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>32</width>
+                 <height>32</height>
+                </size>
+               </property>
+              </widget>
+             </item>
              <item alignment="Qt::AlignHCenter">
               <widget class="QToolButton" name="setting">
                <property name="text">
@@ -658,7 +671,7 @@ QSlider::sub-page:horizontal {
           </size>
          </property>
          <property name="frameShape">
-          <enum>QFrame::Panel</enum>
+          <enum>QFrame::StyledPanel</enum>
          </property>
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
@@ -1135,9 +1148,73 @@ QSlider::sub-page:horizontal {
           <item>
            <widget class="QStackedWidget" name="transform_stack">
             <property name="currentIndex">
-             <number>1</number>
+             <number>2</number>
             </property>
-            <widget class="QWidget" name="preprocess"/>
+            <widget class="QWidget" name="preprocess">
+             <layout class="QVBoxLayout" name="verticalLayout_16">
+              <item>
+               <widget class="QLabel" name="label_18">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>40</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Choose a preprocessing method:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="comboBox_P">
+                <item>
+                 <property name="text">
+                  <string>Decayed log</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Logarithm</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Normalization</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Centering</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Scaling</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Absolute</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Detrend</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item>
+               <widget class="QStackedWidget" name="stackedPreprocessing">
+                <widget class="QWidget" name="page"/>
+                <widget class="QWidget" name="page_3"/>
+                <widget class="QWidget" name="page_4"/>
+                <widget class="QWidget" name="page_5"/>
+                <widget class="QWidget" name="page_2"/>
+               </widget>
+              </item>
+             </layout>
+            </widget>
             <widget class="QWidget" name="augmentation">
              <layout class="QVBoxLayout" name="verticalLayout_9">
               <item>
@@ -1219,7 +1296,7 @@ QSlider::sub-page:horizontal {
               <item>
                <widget class="QStackedWidget" name="param_stack">
                 <property name="currentIndex">
-                 <number>3</number>
+                 <number>6</number>
                 </property>
                 <widget class="QWidget" name="crop">
                  <layout class="QVBoxLayout" name="verticalLayout_31">
@@ -1674,6 +1751,9 @@ QSlider::sub-page:horizontal {
                     </item>
                     <item>
                      <widget class="QSlider" name="width_resize">
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
                       <property name="orientation">
                        <enum>Qt::Horizontal</enum>
                       </property>
@@ -1729,13 +1809,54 @@ QSlider::sub-page:horizontal {
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="MLmodel"/>
+            <widget class="QWidget" name="MLmodel">
+             <layout class="QVBoxLayout" name="verticalLayout_22">
+              <item>
+               <widget class="QLabel" name="label_19">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>40</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Hyperparameters:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="comboBox_2">
+                <item>
+                 <property name="text">
+                  <string>Epochs</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Batch size</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Learning rate</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item>
+               <widget class="QStackedWidget" name="stackedWidget">
+                <widget class="QWidget" name="page_6"/>
+                <widget class="QWidget" name="page_7"/>
+               </widget>
+              </item>
+             </layout>
+            </widget>
            </widget>
           </item>
           <item>
            <widget class="QStackedWidget" name="display_stack">
             <property name="currentIndex">
-             <number>0</number>
+             <number>2</number>
             </property>
             <widget class="QWidget" name="obj_cls">
              <layout class="QVBoxLayout" name="verticalLayout_10">
@@ -1749,9 +1870,9 @@ QSlider::sub-page:horizontal {
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_11">
                  <item>
-                  <widget class="QFrame" name="frame_10">
+                  <widget class="QFrame" name="origin">
                    <property name="frameShape">
-                    <enum>QFrame::Box</enum>
+                    <enum>QFrame::StyledPanel</enum>
                    </property>
                    <property name="frameShadow">
                     <enum>QFrame::Raised</enum>
@@ -1851,9 +1972,9 @@ QSlider::sub-page:horizontal {
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_12">
                  <item>
-                  <widget class="QFrame" name="frame_13">
+                  <widget class="QFrame" name="result">
                    <property name="frameShape">
-                    <enum>QFrame::Box</enum>
+                    <enum>QFrame::StyledPanel</enum>
                    </property>
                    <property name="frameShadow">
                     <enum>QFrame::Raised</enum>
@@ -1984,16 +2105,16 @@ QSlider::sub-page:horizontal {
                      <number>10</number>
                     </property>
                     <item>
-                     <widget class="QFrame" name="frame_23">
+                     <widget class="QFrame" name="o_i_s_labels">
                       <property name="frameShape">
-                       <enum>QFrame::Box</enum>
+                       <enum>QFrame::StyledPanel</enum>
                       </property>
                       <property name="frameShadow">
                        <enum>QFrame::Raised</enum>
                       </property>
                       <layout class="QVBoxLayout" name="verticalLayout_18">
                        <item>
-                        <widget class="QLabel" name="img_original_s">
+                        <widget class="QLabel" name="o_i_s_label">
                          <property name="text">
                           <string/>
                          </property>
@@ -2006,16 +2127,16 @@ QSlider::sub-page:horizontal {
                      </widget>
                     </item>
                     <item>
-                     <widget class="QFrame" name="frame_24">
+                     <widget class="QFrame" name="o_i_s_labels_2">
                       <property name="frameShape">
-                       <enum>QFrame::Box</enum>
+                       <enum>QFrame::StyledPanel</enum>
                       </property>
                       <property name="frameShadow">
                        <enum>QFrame::Raised</enum>
                       </property>
                       <layout class="QVBoxLayout" name="verticalLayout_19">
                        <item>
-                        <widget class="QLabel" name="mask_original">
+                        <widget class="QLabel" name="o_i_s_label_2">
                          <property name="text">
                           <string/>
                          </property>
@@ -2120,16 +2241,16 @@ QSlider::sub-page:horizontal {
                      <number>10</number>
                     </property>
                     <item>
-                     <widget class="QFrame" name="frame_25">
+                     <widget class="QFrame" name="r_i_s_labels">
                       <property name="frameShape">
-                       <enum>QFrame::Box</enum>
+                       <enum>QFrame::StyledPanel</enum>
                       </property>
                       <property name="frameShadow">
                        <enum>QFrame::Raised</enum>
                       </property>
                       <layout class="QVBoxLayout" name="verticalLayout_20">
                        <item>
-                        <widget class="QLabel" name="img_result_s">
+                        <widget class="QLabel" name="r_i_s_label">
                          <property name="text">
                           <string/>
                          </property>
@@ -2142,16 +2263,16 @@ QSlider::sub-page:horizontal {
                      </widget>
                     </item>
                     <item>
-                     <widget class="QFrame" name="frame_26">
+                     <widget class="QFrame" name="r_i_s_labels_2">
                       <property name="frameShape">
-                       <enum>QFrame::Box</enum>
+                       <enum>QFrame::StyledPanel</enum>
                       </property>
                       <property name="frameShadow">
                        <enum>QFrame::Raised</enum>
                       </property>
                       <layout class="QVBoxLayout" name="verticalLayout_21">
                        <item>
-                        <widget class="QLabel" name="mask_result">
+                        <widget class="QLabel" name="r_i_s_label_2">
                          <property name="text">
                           <string/>
                          </property>
@@ -2218,6 +2339,47 @@ QSlider::sub-page:horizontal {
               </item>
              </layout>
             </widget>
+            <widget class="QWidget" name="ml_model">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_26">
+              <item>
+               <widget class="QLabel" name="label_20">
+                <property name="text">
+                 <string>Training process</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QProgressBar" name="progressBar">
+                <property name="value">
+                 <number>24</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_21">
+                <property name="text">
+                 <string>Estimated time</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLCDNumber" name="lcdNumber">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
            </widget>
           </item>
          </layout>
@@ -2238,7 +2400,7 @@ QSlider::sub-page:horizontal {
           </size>
          </property>
          <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
+          <enum>QFrame::StyledPanel</enum>
          </property>
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
