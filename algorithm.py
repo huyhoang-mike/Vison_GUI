@@ -1,13 +1,27 @@
 import albumentations as A
+import cv2
+import numpy as np
 
 class Algorithm:
-    def rotate(self, limit, border_mode):
+    def rotate(self, limit, border):
+        if border == "Constant":
+            border_mode = 1
+        elif border == "Replicate":
+            border_mode = 2
+        elif border == "Reflect":
+            border_mode = 3
         transforms = A.Compose([
                 A.augmentations.geometric.rotate.Rotate(limit=limit, border_mode=border_mode, p=1),
             ])
         return transforms
 
-    def rotateOD(self, limit, border_mode):
+    def rotateOD(self, limit, border):
+        if border == "Constant":
+            border_mode = 1
+        elif border == "Replicate":
+            border_mode = 2
+        elif border == "Reflect":
+            border_mode = 3
         transforms = A.Compose([
                 A.augmentations.geometric.rotate.Rotate(limit=limit, border_mode=border_mode, p=1),
             ], bbox_params=A.BboxParams(format='pascal_voc'))
@@ -85,15 +99,15 @@ class Algorithm:
             ], bbox_params=A.BboxParams(format='pascal_voc'))
         return transforms
     
-    def ZoomBlur(self, max_factor, step_factor):
+    def Blur(self, blur_limit):
         transforms = A.Compose([
-                A.ZoomBlur(p=1, max_factor=max_factor, step_factor=step_factor)
+                A.Blur(always_apply=False, p=1)
             ])
         return transforms
     
-    def ZoomBlurOD(self, max_factor, step_factor):
+    def BlurOD(self, blur_limit):
         transforms = A.Compose([
-                A.ZoomBlur(p=1, max_factor=max_factor, step_factor=step_factor)
+                A.Blur(p=1, blur_limit=blur_limit)
             ], bbox_params=A.BboxParams(format='pascal_voc'))
         return transforms
     
@@ -210,3 +224,14 @@ class Algorithm:
                 A.Solarize(p=1, threshold=param_array["threshold"])
             ])
         return transforms
+    
+    def scale_contrast(self, mean_shift, contrast_scaling, img):
+        gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        mean_val = np.mean(gray_img)
+        std_dev = np.std(gray_img)
+        normalized_img = (gray_img - mean_val) / std_dev
+        # Modify the constants for contrast scaling and mean shift
+        scaled_contrast_img = mean_shift + contrast_scaling * normalized_img
+        scaled_contrast_img = np.clip(scaled_contrast_img, 0, 255).astype(np.uint8)
+        scaled_contrast_img = cv2.cvtColor(scaled_contrast_img, cv2.COLOR_GRAY2RGB)
+        return scaled_contrast_img

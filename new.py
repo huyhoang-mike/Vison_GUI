@@ -7,9 +7,9 @@ from PyQt5.QtWidgets import (QDockWidget, QApplication, QMainWindow, QGraphicsDr
 import sys, os, cv2
 import numpy as np
 from PIL import Image, ImageDraw
+import xml.etree.ElementTree as ET
 import albumentations as A
 from algorithm import Algorithm
-from superqt import QLabeledSlider, QLabeledRangeSlider, QLabeledDoubleRangeSlider, QLabeledDoubleSlider
 
 
 class MainWindow_UI(QMainWindow):
@@ -27,7 +27,24 @@ class MainWindow_UI(QMainWindow):
         self.setup()
         self.controlMainStack()
         self.buttonControl()
+
+        self._mousePressPos = None
+        self._windowPos = None
+
         self.show()
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton and self.ui.toolbar.underMouse():
+            self._mousePressPos = event.globalPos()
+            self._windowPos = self.pos()
+
+    def mouseMoveEvent(self, event):
+        if event.buttons() == Qt.LeftButton and self._mousePressPos:
+            self.move(self._windowPos + (event.globalPos() - self._mousePressPos))
+
+    def mouseReleaseEvent(self, event):
+        self._mousePressPos = None
+        self._windowPos = None
 
     def setup(self):
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
@@ -63,17 +80,28 @@ class MainWindow_UI(QMainWindow):
         self.ui.upload_folder.clicked.connect(self.openFolder)
         self.ui.save_folder.clicked.connect(self.saveFolder)
         self.ui.apply_changes.clicked.connect(self.apply_changes)
+        self.ui.upload_mask.clicked.connect(self.openMask)
+        self.ui.upload_bbox.clicked.connect(self.openBBox)
+        self.ui.toolButton_6.clicked.connect(self.saveBBox)
+
         self.ui.setting.clicked.connect(self.setting)
+        self.ui.help.clicked.connect(self.helpSheet)
 
         self.ui.single_view.clicked.connect(lambda: self.viewHandle(1))
         self.ui.multiple_view.clicked.connect(lambda: self.viewHandle(2))
 
-        self.ui.max_factor.valueChanged.connect(self.responsive)
-        self.ui.step_factor.valueChanged.connect(self.responsive)
+        self.ui.blur_limit.valueChanged.connect(self.responsive)
         self.ui.var_limit.valueChanged.connect(self.responsive)
         self.ui.mean_value.valueChanged.connect(self.responsive)
         self.ui.rotate_limit.valueChanged.connect(self.responsive)
         self.ui.solarize_value.valueChanged.connect(self.responsive)
+        self.ui.horizontalSlider.valueChanged.connect(self.responsive)
+        self.ui.horizontalSlider_2.valueChanged.connect(self.responsive)
+
+        self.ui.width_resize.valueChanged.connect(self.responsive)
+        self.ui.height_resize.valueChanged.connect(self.responsive)
+        self.ui.width.valueChanged.connect(self.responsive)
+        self.ui.height.valueChanged.connect(self.responsive)
 
     def controlMainStack(self):
         self.ui.ac.clicked.connect(lambda: self.testLambda(1))
@@ -98,11 +126,23 @@ class MainWindow_UI(QMainWindow):
         "Resize": 6,
         "Horizontal Flip": 7,    
         }
+
+        if self.ui.comboBox.currentText() == 'Horizontal Flip' or self.ui.comboBox.currentText() == 'Vertical Flip':
+            self.responsive()
+
         current_text = self.ui.comboBox.currentText()
         if current_text in options_mapping:
             self.ui.param_stack.setCurrentIndex(options_mapping[current_text])
 
     def testLambda(self, index):
+
+        self.ui.img_original_oc.setPixmap(QPixmap())
+        self.ui.img_result_oc.setPixmap(QPixmap())
+        self.ui.o_i_s_label.setPixmap(QPixmap())
+        self.ui.o_i_s_label_2.setPixmap(QPixmap())
+        self.ui.r_i_s_label.setPixmap(QPixmap())
+        self.ui.r_i_s_label_2.setPixmap(QPixmap())
+
         if index == 1:
             self.ui.state_label.setText("Augmentation for Classification")
             self.ui.display_stack.setCurrentIndex(0)
@@ -121,7 +161,8 @@ class MainWindow_UI(QMainWindow):
         elif index == 4:
             self.ui.state_label.setText("Preprpcessing for Classification")
             self.ui.display_stack.setCurrentIndex(0)
-            self.ui.transform_stack.setCurrentIndex(1)
+            self.ui.transform_stack.setCurrentIndex(0)
+            self.ui.comboBox_P.setCurrentText('Scale variable by square root')
             self.mode = 4
         elif index == 5:
             self.ui.state_label.setText("Preprpcessing for Segmentation")
@@ -152,8 +193,11 @@ class MainWindow_UI(QMainWindow):
     def viewHandle(self, index):
         if self.mode == 1:
             if index == 1:
-                self.ui.img_original_oc.setPixmap(self.pixmap_from_cv_image(self.base_img))
-                self.ui.img_result_oc.setPixmap(self.pixmap_from_cv_image(self.base_img))
+                if self.rootdir == '':
+                    QMessageBox.information(self, 'Error', 'Please upload a folder', QMessageBox.Ok)
+                else:
+                    self.ui.img_original_oc.setPixmap(self.pixmap_from_cv_image(self.base_img))
+                    self.ui.img_result_oc.setPixmap(self.pixmap_from_cv_image(self.base_img))
             elif index == 2:
                 if self.rootdir == '':
                     QMessageBox.information(self, 'Error', 'Please upload a folder', QMessageBox.Ok)
@@ -188,16 +232,91 @@ class MainWindow_UI(QMainWindow):
 
         self.widget.show()
 
+    def helpSheet(self):
+        manual_text = """
+        Vision GUI Manual
+        -----------------
+        
+        Creating More Data:
+        1. Open the Vision GUI application.
+        2. Use the toolbar on the top to start augmentation.
+        3. Save your images and necessary files.
+        4. ....
+        5. ...
+
+        For further details and advanced features, refer to the official documentation.
+
+        Contact huyhoang.nguyen@infineon.com for assistance.
+        """
+
+        self.manual_widget = QTextEdit()
+        self.manual_widget.setPlainText(manual_text)
+        self.manual_widget.setReadOnly(True)
+        self.manual_widget.setWindowTitle('Manual')
+        self.manual_widget.setGeometry(100, 100, 600, 400)
+        self.manual_widget.show()
+
     def openImage(self):
-        self.image_file, _ = QFileDialog.getOpenFileName(self, "Open Image", "","")
+        self.image_file, _ = QFileDialog.getOpenFileName(self, "Open Image", "C:/Users/nguyenhuyhoa/Pictures/Saved Pictures/test","")
 
         if self.image_file:
             self.root_dir = os.path.dirname(self.image_file)
             pixmap = QPixmap(self.image_file)
             self.ui.img_original_oc.setPixmap(pixmap)
+            self.ui.o_i_s_label.setPixmap(pixmap)
             self.base_img = cv2.imread(self.image_file)
+            self.updateImageShape()
         else:
             QMessageBox.information(self, 'Error', 'Unable to open image', QMessageBox.Ok)
+
+    def openMask(self):
+        self.mask_file, _ = QFileDialog.getOpenFileName(self, "Open a mask", "C:/Users/nguyenhuyhoa/Pictures/Saved Pictures/test","JPG Files (*.jpeg *.jpg );;\
+                                                           PNG Files (*.png);;Bitmap Files (*.bmp);;GIF Files (*.gif)")
+        if self.mask_file:
+            pixmap = QPixmap(self.mask_file)
+            self.ui.o_i_s_label_2.setPixmap(pixmap)
+        else:
+            QMessageBox.information(self, 'Error', 'Unable to open mask', QMessageBox.Ok)
+
+    def openBBox(self):  
+        self.bbox_file, _ = QFileDialog.getOpenFileName(self, "Open XML file", "C:/Users/nguyenhuyhoa/Pictures/Saved Pictures/test","(*.xml)")
+        if self.bbox_file:
+            tree = ET.parse(self.bbox_file)
+            root = tree.getroot()
+            # Initialize an empty list to store bounding boxes
+            self.bboxes = []
+            # Iterate through each "object" node to extract bounding box coordinates
+            for obj in root.findall('object'):
+                bndbox = obj.find('bndbox')
+                xmin = float(bndbox.find('xmin').text)
+                ymin = float(bndbox.find('ymin').text)
+                xmax = float(bndbox.find('xmax').text)
+                ymax = float(bndbox.find('ymax').text)
+                label = str(obj.find('name').text)
+                self.bboxes.append([xmin, ymin, xmax, ymax, label])
+            
+            img = cv2.imread(self.image_file)
+            result = self.drawBBox(img, self.bboxes)
+            pixmap = self.pixmap_from_cv_image(result)
+            self.ui.img_original_oc.setPixmap(pixmap)
+         
+        else:
+            QMessageBox.information(self, 'Error', 'Please upload the bounding box', QMessageBox.Ok)
+
+    def drawBBox(self, image, bbox):
+        for each in bbox:
+            xmin, ymin, xmax, ymax, label = each
+            xmin, ymin, xmax, ymax = map(int, (xmin, ymin, xmax, ymax))
+            image_bbox = cv2.rectangle(image, (xmin,ymin), (xmax,ymax), (255,0,0), 2)
+        return image_bbox
+
+    def saveBBox(self):
+        dir = os.path.join(self.root_dir, "bbox.txt")
+        with open(dir, 'w') as file:
+            for item in self.transformed_bboxes:
+                line = ' '.join([str(x) for x in item[::-1]])  # Reversing the tuple and joining its elements
+                file.write(f"{line}\n")  # Writing the formatted line to the file
+        QMessageBox.information(self, 'Successful', 'Bounding box saved', QMessageBox.Ok)
 
     def saveImage(self):
         method_map = {
@@ -217,10 +336,11 @@ class MainWindow_UI(QMainWindow):
                 "Channel Shuffle": "shuffled",
                 "Coarse Dropout": "dropout"
             }
-        
+
         method = method_map.get(self.ui.comboBox.currentText(), "NotFound")
         custom_filename = f"{os.path.basename(self.image_file).split('.')[0]}_{method}.jpg"
         cv2.imwrite(os.path.join(self.root_dir, custom_filename), self.base_img)
+        QMessageBox.information(self, 'Successful', 'Image saved', QMessageBox.Ok)
        
     def openFolder(self):
         self.rootdir = QFileDialog.getExistingDirectory(self, caption='Select a folder')
@@ -241,22 +361,41 @@ class MainWindow_UI(QMainWindow):
         if self.rootdir == '':
             QMessageBox.information(self, 'Error', 'Please upload a folder', QMessageBox.Ok)
         else:
-            for subdir, dirs, files in os.walk(self.rootdir):
-                base_dir = os.path.dirname(self.rootdir)
-                os.mkdir(os.path.join(base_dir, 'transformed'))
-                total = len(files)
-                counter = float(self.percentage/100)*total
-                for file in files:
-                    counter = counter - 1 
-                    if counter < 0:
-                        break
-                    frame = cv2.imread(os.path.join(subdir, file))  
-                    original_filename = os.path.basename(os.path.join(subdir, file)).split('.')[0]
-                    custom_filename = f"{original_filename}_transformed.jpg"
-                    savedDir = os.path.join(base_dir, 'transformed', custom_filename)
-                    cv2.imwrite(savedDir, self.transformation(frame))
-                break
-            QMessageBox.information(self, 'Completed', 'Augmented folder has been saved', QMessageBox.Ok)
+            if self.mode == 1:
+                for subdir, dirs, files in os.walk(self.rootdir):
+                    base_dir = os.path.dirname(self.rootdir)
+                    os.mkdir(os.path.join(base_dir, 'transformed'))
+                    total = len(files)
+                    counter = float(self.percentage/100)*total
+                    for file in files:
+                        counter = counter - 1 
+                        if counter < 0:
+                            break
+                        frame = cv2.imread(os.path.join(subdir, file))  
+                        original_filename = os.path.basename(os.path.join(subdir, file)).split('.')[0]
+                        custom_filename = f"{original_filename}_transformed.jpg"
+                        savedDir = os.path.join(base_dir, 'transformed', custom_filename)
+                        cv2.imwrite(savedDir, self.transformation(frame))
+                    break
+                QMessageBox.information(self, 'Completed', 'Augmented folder has been saved', QMessageBox.Ok)
+            elif self.mode == 3:
+                for subdir, dirs, files in os.walk(self.rootdir):
+                    base_dir = os.path.dirname(self.rootdir)
+                    os.mkdir(os.path.join(base_dir, 'transformed'))
+                    total = len(files)
+                    counter = float(self.percentage/100)*total
+                    for file in files:
+                        counter = counter - 1 
+                        if counter < 0:
+                            break
+                        frame = cv2.imread(os.path.join(subdir, file))  
+                        original_filename = os.path.basename(os.path.join(subdir, file)).split('.')[0]
+                        custom_img_filename = f"{original_filename}_transformed.jpg"
+                        custom_bbox_filename = f"{original_filename}_transformed.txt"
+                        savedDir = os.path.join(base_dir, 'transformed', custom_img_filename)
+                        cv2.imwrite(savedDir, self.transformation(frame)[0])
+                    break
+                QMessageBox.information(self, 'Completed', 'Augmented folder has been saved', QMessageBox.Ok)
 
     def multi_image_viewer(self, dir: str, col: int, row: int):
     # Get a list of all image files in the folder
@@ -312,7 +451,22 @@ class MainWindow_UI(QMainWindow):
     def responsive(self):
         if self.image_file == '':
             QMessageBox.information(self, 'Error', 'Please upload an image', QMessageBox.Ok)
-        else:
+        elif self.mode == 1:
+            img = self.transformation(self.base_img)
+            self.pixmap = self.pixmap_from_cv_image(img)
+            self.ui.img_result_oc.setPixmap(self.pixmap)
+        elif self.mode == 2:
+            img, mask = self.transformation(self.base_img)
+            self.pixmap = self.pixmap_from_cv_image(img)
+            self.ui.r_i_s_label.setPixmap(self.pixmap)
+            self.pixmap_mask = self.pixmap_from_cv_image(mask)
+            self.ui.r_i_s_label_2.setPixmap(self.pixmap_mask)
+        elif self.mode == 3:
+            img, bbox = self.transformation(self.base_img)
+            result = self.drawBBox(image=img, bbox=bbox)
+            self.pixmap = self.pixmap_from_cv_image(result)
+            self.ui.img_result_oc.setPixmap(self.pixmap)
+        elif self.mode == 4:
             img = self.transformation(self.base_img)
             self.pixmap = self.pixmap_from_cv_image(img)
             self.ui.img_result_oc.setPixmap(self.pixmap)
@@ -324,7 +478,7 @@ class MainWindow_UI(QMainWindow):
     def transformation(self, image_data):
         if self.mode == 1 or self.mode == 2:
             if self.ui.comboBox.currentText() == "Rotate":
-                self.transforms = self.algorithms.rotate(limit=self.ui.rotate_limit.sliderPosition(), border_mode=1)
+                self.transforms = self.algorithms.rotate(limit=self.ui.rotate_limit.sliderPosition(), border=self.ui.rotate_options.currentText())
             elif self.ui.comboBox.currentText() == "Crop":
                 self.transforms = self.algorithms.Mcrop(xmin=self.ui.width.sliderPosition()[0], xmax=self.ui.width.sliderPosition()[1],
                                                 ymin=self.ui.height.sliderPosition()[0], ymax=self.ui.height.sliderPosition()[1]) 
@@ -335,27 +489,59 @@ class MainWindow_UI(QMainWindow):
             elif self.ui.comboBox.currentText() == "Resize":
                 self.transforms = self.algorithms.resize(width=self.ui.width_resize.value(), height=self.ui.height_resize.value())
             elif self.ui.comboBox.currentText() == "Blur":                   
-                self.transforms = self.algorithms.ZoomBlur(max_factor=self.ui.max_factor.value(), step_factor=self.ui.step_factor.sliderPosition())
+                self.transforms = self.algorithms.Blur(blur_limit=self.ui.blur_limit.value())
             elif self.ui.comboBox.currentText() == "Solarize":                   
                 self.transforms = self.algorithms.Solarize(threshold=self.ui.solarize_value.value())   
             elif self.ui.comboBox.currentText() == "Noise":                   
                 self.transforms = self.algorithms.GaussNoise(var_limit=self.ui.var_limit.value(), mean=self.ui.mean_value.value()) 
-
-        self.image_tranformed = self.transforms(image=image_data)["image"]
-
-        return self.image_tranformed
+            
+            if self.mode == 1:
+                self.image_tranformed = self.transforms(image=image_data)["image"]
+                return self.image_tranformed
+            elif self.mode == 2:
+                mask = cv2.imread(self.mask_file)
+                transformed = self.transforms(image=image_data, mask=mask)
+                self.image_tranformed = transformed['image']
+                self.transformed_mask = transformed['mask']
+                return self.image_tranformed, self.transformed_mask 
+        
+        elif self.mode == 3:
+            if self.ui.comboBox.currentText() == "Rotate":
+                self.transforms = self.algorithms.rotateOD(limit=self.ui.rotate_limit.sliderPosition(), border=self.ui.rotate_options.currentText())
+            elif self.ui.comboBox.currentText() == "Crop":
+                self.transforms = self.algorithms.McropOD(xmin=self.ui.width.sliderPosition()[0], xmax=self.ui.width.sliderPosition()[1],
+                                                ymin=self.ui.height.sliderPosition()[0], ymax=self.ui.height.sliderPosition()[1]) 
+            elif self.ui.comboBox.currentText() == "Horizontal Flip":
+                self.transforms = self.algorithms.hflipOD()
+            elif self.ui.comboBox.currentText() == "Vertical Flip":
+                self.transforms = self.algorithms.vflipOD()
+            elif self.ui.comboBox.currentText() == "Resize":
+                self.transforms = self.algorithms.resizeOD(width=self.ui.width_resize.value(), height=self.ui.height_resize.value())
+            elif self.ui.comboBox.currentText() == "Blur":                   
+                self.transforms = self.algorithms.BlurOD(blur_limit=self.ui.blur_limit.value())
+            elif self.ui.comboBox.currentText() == "Solarize":                   
+                self.transforms = self.algorithms.SolarizeOD(threshold=self.ui.solarize_value.value())   
+            elif self.ui.comboBox.currentText() == "Noise":                   
+                self.transforms = self.algorithms.GaussNoiseOD(var_limit=self.ui.var_limit.value(), mean=self.ui.mean_value.value()) 
+            
+            transformed = self.transforms(image=image_data, bboxes=self.bboxes)
+            self.image_tranformed = transformed['image']
+            self.transformed_bboxes = transformed['bboxes']
+        
+            return self.image_tranformed, self.transformed_bboxes
+        
+        elif self.mode == 4:
+            self.image_tranformed = self.algorithms.scale_contrast(mean_shift=self.ui.horizontalSlider.value(), 
+                                                                   contrast_scaling=self.ui.horizontalSlider_2.value(), img=image_data)
+            return self.image_tranformed
 
     def updateImageShape(self):
-        # if self.state == 0:
-        #     image = cv2.imread(self.image_file)
-        #     height, width, channels = image.shape
-        #     self.widthBar.setRange(0,width)
-        #     self.heightBar.setRange(0,height)
-        #     self.McropWidth.setRange(0, width)
-        #     self.McropHeight.setRange(0,height)
-        #     self.widthR.setRange(0,width)
-        #     self.heightR.setRange(0,height)
-        pass
+        image = cv2.imread(self.image_file)
+        height, width, channels = image.shape
+        self.ui.width_resize.setRange(1,width)
+        self.ui.height_resize.setRange(1,height)
+        self.ui.width.setRange(1, width)
+        self.ui.height.setRange(1,height)
 
     def pil2pixmap(self, im):
         if im.mode == "RGB":
