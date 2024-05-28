@@ -1,4 +1,4 @@
-from base_ui import *
+from frontend.base_ui import *
 from PyQt5.QtCore import Qt, QSize, QRect
 from PyQt5.QtGui import QFont, QPixmap, QIcon, QTransform, QImage, QPainter, QBrush, QPen, QColor
 from PyQt5.QtWidgets import (QDockWidget, QApplication, QMainWindow, QGraphicsDropShadowEffect, QDockWidget, QApplication, QMainWindow, QAction, QStatusBar, QFileDialog, QScrollArea, QDoubleSpinBox, QRadioButton, QFrame,
