@@ -45,18 +45,10 @@ def scale_contrast(mean_shift, contrast_scaling, img):
     scaled_contrast_img = np.clip(scaled_contrast_img, 0, 255).astype(np.uint8)
     return scaled_contrast_img
 
-img = cv2.imread('C:/Users/nguyenhuyhoa/Pictures/Saved Pictures/easy/good/S03_M0004-01MSreal_3172.jpg', cv2.IMREAD_GRAYSCALE)
-print(img.shape)
-new_img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
-print(new_img.shape)
-# result = scale_contrast(mean_shift=128, contrast_scaling=50, img=img)
-# cv2.imwrite('test.jpg', result)
-
-# Read grayscale image
-# gray_img = cv2.imread('C:/Users/nguyenhuyhoa/Pictures/Saved Pictures/easy/good/S03_M0004-01MSreal_3172.jpg', cv2.IMREAD_GRAYSCALE)
-
-
-tuple_ = (1,2)
+img = cv2.imread('C:/Users/nguyenhuyhoa/Pictures/Saved Pictures/test/img1.jpg')
+gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+absolute_transformed = np.abs(gray_img)
+cv2.imwrite('ok.jpg', absolute_transformed)
 
 
 

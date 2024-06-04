@@ -1,4 +1,4 @@
-from frontend.base_ui import *
+from frontend.main_ui import *
 from PyQt5.QtCore import Qt, QSize, QRect
 from PyQt5.QtGui import QFont, QPixmap, QIcon, QTransform, QImage, QPainter, QBrush, QPen, QColor
 from PyQt5.QtWidgets import (QDockWidget, QApplication, QMainWindow, QGraphicsDropShadowEffect, QDockWidget, QApplication, QMainWindow, QAction, QStatusBar, QFileDialog, QScrollArea, QDoubleSpinBox, QRadioButton, QFrame,
@@ -95,8 +95,14 @@ class MainWindow_UI(QMainWindow):
         self.ui.mean_value.valueChanged.connect(self.responsive)
         self.ui.rotate_limit.valueChanged.connect(self.responsive)
         self.ui.solarize_value.valueChanged.connect(self.responsive)
-        self.ui.horizontalSlider.valueChanged.connect(self.responsive)
-        self.ui.horizontalSlider_2.valueChanged.connect(self.responsive)
+
+        self.ui.mean_shift.valueChanged.connect(self.responsive)
+        self.ui.scale_limit.valueChanged.connect(self.responsive)
+        self.ui.scale_factor.valueChanged.connect(self.responsive)
+        self.ui.gamma_factor.valueChanged.connect(self.responsive)
+        self.ui.decay_factor.valueChanged.connect(self.responsive)
+        self.ui.alpha_value.valueChanged.connect(self.responsive)
+        self.ui.beta_value.valueChanged.connect(self.responsive)
 
         self.ui.width_resize.valueChanged.connect(self.responsive)
         self.ui.height_resize.valueChanged.connect(self.responsive)
@@ -114,6 +120,7 @@ class MainWindow_UI(QMainWindow):
         self.ui.mls.clicked.connect(lambda: self.testLambda(8))
         self.ui.mlo.clicked.connect(lambda: self.testLambda(9))
         self.ui.comboBox.currentIndexChanged.connect(self.controlSubStack)
+        self.ui.comboBox_P.currentIndexChanged.connect(self.controlSubStack_P)
 
     def controlSubStack(self):
         options_mapping = {
@@ -133,6 +140,22 @@ class MainWindow_UI(QMainWindow):
         current_text = self.ui.comboBox.currentText()
         if current_text in options_mapping:
             self.ui.param_stack.setCurrentIndex(options_mapping[current_text])
+
+    def controlSubStack_P(self):
+        options_mapping_P = {
+        "Decayed log": 2,
+        "Scale variable by square root": 0,
+        "Logarithm": 1,
+        "Normalization": 4,
+        "Absolute": 3,
+        }
+
+        if self.ui.comboBox_P.currentText() == 'Absolute':
+            self.responsive()
+
+        current_text = self.ui.comboBox_P.currentText()
+        if current_text in options_mapping_P:
+            self.ui.stackedPreprocessing.setCurrentIndex(options_mapping_P[current_text])
 
     def testLambda(self, index):
 
@@ -531,8 +554,18 @@ class MainWindow_UI(QMainWindow):
             return self.image_tranformed, self.transformed_bboxes
         
         elif self.mode == 4:
-            self.image_tranformed = self.algorithms.scale_contrast(mean_shift=self.ui.horizontalSlider.value(), 
-                                                                   contrast_scaling=self.ui.horizontalSlider_2.value(), img=image_data)
+            if self.ui.comboBox_P.currentText() == 'Scale variable by square root':
+                self.image_tranformed = self.algorithms.scale_contrast(mean_shift=self.ui.mean_shift.value(), 
+                                                                   contrast_scaling=self.ui.scale_limit.value(), img=image_data)
+            if self.ui.comboBox_P.currentText() == 'Logarithm':
+                self.image_tranformed = self.algorithms.log(c=self.ui.scale_factor.value(), gamma=self.ui.gamma_factor.value(), 
+                                                        img=image_data)
+            if self.ui.comboBox_P.currentText() == 'Decayed log':
+                self.image_tranformed = self.algorithms.decay(decay_factor=self.ui.decay_factor.value(), img=image_data)
+            if self.ui.comboBox_P.currentText() == 'Normalization':
+                self.image_tranformed = self.algorithms.normalization(alpha=self.ui.alpha_value.value(), beta=self.ui.beta_value.value(), img=image_data)
+            if self.ui.comboBox_P.currentText() == 'Absolute':
+                self.image_tranformed = self.algorithms.absolute(img=image_data)
             return self.image_tranformed
 
     def updateImageShape(self):

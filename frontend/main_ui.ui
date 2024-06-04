@@ -588,7 +588,7 @@ QSlider::sub-page:horizontal {
                 <string> HELP</string>
                </property>
                <property name="icon">
-                <iconset resource="svg/icons.qrc">
+                <iconset resource="../svg/icons.qrc">
                  <normaloff>:/icons/9042837_question_mark_circle_icon.svg</normaloff>:/icons/9042837_question_mark_circle_icon.svg</iconset>
                </property>
                <property name="iconSize">
@@ -608,7 +608,7 @@ QSlider::sub-page:horizontal {
                 <string> SETTINGS</string>
                </property>
                <property name="icon">
-                <iconset resource="svg/icons.qrc">
+                <iconset resource="../svg/icons.qrc">
                  <normaloff>:/icons/185095_settings_icon.svg</normaloff>:/icons/185095_settings_icon.svg</iconset>
                </property>
                <property name="iconSize">
@@ -739,7 +739,7 @@ QSlider::sub-page:horizontal {
                 <string>...</string>
                </property>
                <property name="icon">
-                <iconset resource="svg/icons.qrc">
+                <iconset resource="../svg/icons.qrc">
                  <normaloff>:/icons/2849812_menu_multimedia_bars_media_icon.svg</normaloff>:/icons/2849812_menu_multimedia_bars_media_icon.svg</iconset>
                </property>
                <property name="iconSize">
@@ -789,7 +789,7 @@ QSlider::sub-page:horizontal {
                 <string>...</string>
                </property>
                <property name="icon">
-                <iconset resource="svg/icons.qrc">
+                <iconset resource="../svg/icons.qrc">
                  <normaloff>:/icons/1976052_gallery_image_images_photo_picture_icon.svg</normaloff>:/icons/1976052_gallery_image_images_photo_picture_icon.svg</iconset>
                </property>
                <property name="iconSize">
@@ -812,7 +812,7 @@ QSlider::sub-page:horizontal {
                 <string>...</string>
                </property>
                <property name="icon">
-                <iconset resource="svg/icons.qrc">
+                <iconset resource="../svg/icons.qrc">
                  <normaloff>:/icons/2931171_download_import_save_down_storage_icon.svg</normaloff>:/icons/2931171_download_import_save_down_storage_icon.svg</iconset>
                </property>
                <property name="iconSize">
@@ -835,7 +835,7 @@ QSlider::sub-page:horizontal {
                 <string>...</string>
                </property>
                <property name="icon">
-                <iconset resource="svg/icons.qrc">
+                <iconset resource="../svg/icons.qrc">
                  <normaloff>:/icons/8324190_ui_essential_app_folder_upload_icon.svg</normaloff>:/icons/8324190_ui_essential_app_folder_upload_icon.svg</iconset>
                </property>
                <property name="iconSize">
@@ -858,7 +858,7 @@ QSlider::sub-page:horizontal {
                 <string>...</string>
                </property>
                <property name="icon">
-                <iconset resource="svg/icons.qrc">
+                <iconset resource="../svg/icons.qrc">
                  <normaloff>:/icons/2931176_diskette_guardar_save_disk_drive_icon.svg</normaloff>:/icons/2931176_diskette_guardar_save_disk_drive_icon.svg</iconset>
                </property>
                <property name="iconSize">
@@ -881,7 +881,7 @@ QSlider::sub-page:horizontal {
                 <string>...</string>
                </property>
                <property name="icon">
-                <iconset resource="svg/icons.qrc">
+                <iconset resource="../svg/icons.qrc">
                  <normaloff>:/icons/Image_Segmentation_clip_art.svg</normaloff>:/icons/Image_Segmentation_clip_art.svg</iconset>
                </property>
                <property name="iconSize">
@@ -901,7 +901,7 @@ QSlider::sub-page:horizontal {
                 <string>...</string>
                </property>
                <property name="icon">
-                <iconset resource="svg/icons.qrc">
+                <iconset resource="../svg/icons.qrc">
                  <normaloff>:/icons/285644_folder_green_icon.svg</normaloff>:/icons/285644_folder_green_icon.svg</iconset>
                </property>
                <property name="iconSize">
@@ -921,7 +921,7 @@ QSlider::sub-page:horizontal {
                 <string>...</string>
                </property>
                <property name="icon">
-                <iconset resource="svg/icons.qrc">
+                <iconset resource="../svg/icons.qrc">
                  <normaloff>:/icons/1419157_download_folder_icon.ico</normaloff>:/icons/1419157_download_folder_icon.ico</iconset>
                </property>
                <property name="iconSize">
@@ -944,7 +944,7 @@ QSlider::sub-page:horizontal {
                 <string>...</string>
                </property>
                <property name="icon">
-                <iconset resource="svg/icons.qrc">
+                <iconset resource="../svg/icons.qrc">
                  <normaloff>:/icons/9039845_bounding_box_circles_icon.svg</normaloff>:/icons/9039845_bounding_box_circles_icon.svg</iconset>
                </property>
                <property name="iconSize">
@@ -964,7 +964,7 @@ QSlider::sub-page:horizontal {
                 <string>...</string>
                </property>
                <property name="icon">
-                <iconset resource="svg/icons.qrc">
+                <iconset resource="../svg/icons.qrc">
                  <normaloff>:/icons/285658_blue_folder_icon.svg</normaloff>:/icons/285658_blue_folder_icon.svg</iconset>
                </property>
                <property name="iconSize">
@@ -987,7 +987,7 @@ QSlider::sub-page:horizontal {
                 <string>...</string>
                </property>
                <property name="icon">
-                <iconset resource="svg/icons.qrc">
+                <iconset resource="../svg/icons.qrc">
                  <normaloff>:/icons/285657_floppy_guardar_save_icon.svg</normaloff>:/icons/285657_floppy_guardar_save_icon.svg</iconset>
                </property>
                <property name="iconSize">
@@ -1007,7 +1007,7 @@ QSlider::sub-page:horizontal {
                 <string>...</string>
                </property>
                <property name="icon">
-                <iconset resource="svg/icons.qrc">
+                <iconset resource="../svg/icons.qrc">
                  <normaloff>:/icons/7720257_neuron_connections_neural_network_icon.svg</normaloff>:/icons/7720257_neuron_connections_neural_network_icon.svg</iconset>
                </property>
                <property name="iconSize">
@@ -1066,7 +1066,7 @@ QSlider::sub-page:horizontal {
                 <string>...</string>
                </property>
                <property name="icon">
-                <iconset resource="svg/icons.qrc">
+                <iconset resource="../svg/icons.qrc">
                  <normaloff>:/icons/8664917_window_minimize_icon.svg</normaloff>:/icons/8664917_window_minimize_icon.svg</iconset>
                </property>
                <property name="iconSize">
@@ -1089,7 +1089,7 @@ QSlider::sub-page:horizontal {
                 <string>...</string>
                </property>
                <property name="icon">
-                <iconset resource="svg/icons.qrc">
+                <iconset resource="../svg/icons.qrc">
                  <normaloff>:/icons/8680270_fullscreen_line_icon.svg</normaloff>:/icons/8680270_fullscreen_line_icon.svg</iconset>
                </property>
                <property name="iconSize">
@@ -1112,7 +1112,7 @@ QSlider::sub-page:horizontal {
                 <string>...</string>
                </property>
                <property name="icon">
-                <iconset resource="svg/icons.qrc">
+                <iconset resource="../svg/icons.qrc">
                  <normaloff>:/icons/9110796_x_icon.svg</normaloff>:/icons/9110796_x_icon.svg</iconset>
                </property>
                <property name="iconSize">
@@ -1159,7 +1159,7 @@ QSlider::sub-page:horizontal {
           <item>
            <widget class="QStackedWidget" name="transform_stack">
             <property name="currentIndex">
-             <number>1</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="preprocess">
              <property name="minimumSize">
@@ -1206,22 +1206,7 @@ QSlider::sub-page:horizontal {
                 </item>
                 <item>
                  <property name="text">
-                  <string>Centering</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Scaling</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
                   <string>Absolute</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Detrend</string>
                  </property>
                 </item>
                </widget>
@@ -1229,17 +1214,20 @@ QSlider::sub-page:horizontal {
               <item>
                <widget class="QStackedWidget" name="stackedPreprocessing">
                 <property name="currentIndex">
-                 <number>0</number>
+                 <number>4</number>
                 </property>
                 <widget class="QWidget" name="sqmn">
                  <layout class="QVBoxLayout" name="verticalLayout_30">
                   <item>
-                   <layout class="QVBoxLayout" name="verticalLayout_28">
+                   <layout class="QVBoxLayout" name="sqmn_layout">
+                    <property name="spacing">
+                     <number>45</number>
+                    </property>
                     <property name="topMargin">
                      <number>45</number>
                     </property>
                     <property name="bottomMargin">
-                     <number>45</number>
+                     <number>0</number>
                     </property>
                     <item>
                      <widget class="QLabel" name="label_22">
@@ -1249,7 +1237,7 @@ QSlider::sub-page:horizontal {
                      </widget>
                     </item>
                     <item>
-                     <widget class="QSlider" name="horizontalSlider">
+                     <widget class="QSlider" name="mean_shift">
                       <property name="maximum">
                        <number>255</number>
                       </property>
@@ -1266,7 +1254,7 @@ QSlider::sub-page:horizontal {
                      </widget>
                     </item>
                     <item>
-                     <widget class="QSlider" name="horizontalSlider_2">
+                     <widget class="QSlider" name="scale_limit">
                       <property name="maximum">
                        <number>255</number>
                       </property>
@@ -1279,10 +1267,144 @@ QSlider::sub-page:horizontal {
                   </item>
                  </layout>
                 </widget>
-                <widget class="QWidget" name="page_3"/>
-                <widget class="QWidget" name="page_4"/>
-                <widget class="QWidget" name="page_5"/>
-                <widget class="QWidget" name="page_2"/>
+                <widget class="QWidget" name="log">
+                 <layout class="QVBoxLayout" name="verticalLayout_34">
+                  <item>
+                   <layout class="QVBoxLayout" name="log_layout">
+                    <property name="spacing">
+                     <number>45</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>45</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="label_4">
+                      <property name="text">
+                       <string>Scaling factor</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QSlider" name="scale_factor">
+                      <property name="maximum">
+                       <number>1</number>
+                      </property>
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_24">
+                      <property name="text">
+                       <string>Gamma factor</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QSlider" name="gamma_factor">
+                      <property name="maximum">
+                       <number>1</number>
+                      </property>
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </widget>
+                <widget class="QWidget" name="decay">
+                 <layout class="QVBoxLayout" name="verticalLayout_36">
+                  <item>
+                   <layout class="QVBoxLayout" name="decay_layout">
+                    <property name="spacing">
+                     <number>45</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>45</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="label_25">
+                      <property name="text">
+                       <string>Decay_factor</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QSlider" name="decay_factor">
+                      <property name="maximum">
+                       <number>1</number>
+                      </property>
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </widget>
+                <widget class="QWidget" name="absolute">
+                 <layout class="QVBoxLayout" name="verticalLayout_39">
+                  <item>
+                   <widget class="QLabel" name="label_28">
+                    <property name="text">
+                     <string>Absolute algorithm has no parameter.</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+                <widget class="QWidget" name="normalize">
+                 <layout class="QVBoxLayout" name="verticalLayout_38">
+                  <item>
+                   <layout class="QVBoxLayout" name="normal_layout">
+                    <property name="spacing">
+                     <number>45</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>45</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="label_26">
+                      <property name="text">
+                       <string>Alpha</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QSlider" name="alpha_value">
+                      <property name="maximum">
+                       <number>1</number>
+                      </property>
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_27">
+                      <property name="text">
+                       <string>Beta</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QSlider" name="beta_value">
+                      <property name="maximum">
+                       <number>1</number>
+                      </property>
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </widget>
                </widget>
               </item>
              </layout>
@@ -1368,7 +1490,7 @@ QSlider::sub-page:horizontal {
               <item>
                <widget class="QStackedWidget" name="param_stack">
                 <property name="currentIndex">
-                 <number>5</number>
+                 <number>2</number>
                 </property>
                 <widget class="QWidget" name="crop">
                  <layout class="QVBoxLayout" name="verticalLayout_31">
@@ -1881,6 +2003,9 @@ QSlider::sub-page:horizontal {
               </item>
               <item>
                <widget class="QStackedWidget" name="stackedWidget">
+                <property name="currentIndex">
+                 <number>0</number>
+                </property>
                 <widget class="QWidget" name="page_6"/>
                 <widget class="QWidget" name="page_7"/>
                </widget>
@@ -2566,7 +2691,7 @@ QSlider::sub-page:horizontal {
                 <string> Apply changes</string>
                </property>
                <property name="icon">
-                <iconset resource="svg/icons.qrc">
+                <iconset resource="../svg/icons.qrc">
                  <normaloff>:/icons/2638314_arrow_scale_sign_square_symbol_icon.svg</normaloff>:/icons/2638314_arrow_scale_sign_square_symbol_icon.svg</iconset>
                </property>
                <property name="autoExclusive">
@@ -2651,7 +2776,7 @@ QSlider::sub-page:horizontal {
                 <string>...</string>
                </property>
                <property name="icon">
-                <iconset resource="svg/icons.qrc">
+                <iconset resource="../svg/icons.qrc">
                  <normaloff>:/icons/9025873_square_icon.svg</normaloff>:/icons/9025873_square_icon.svg</iconset>
                </property>
                <property name="iconSize">
@@ -2674,7 +2799,7 @@ QSlider::sub-page:horizontal {
                 <string>...</string>
                </property>
                <property name="icon">
-                <iconset resource="svg/icons.qrc">
+                <iconset resource="../svg/icons.qrc">
                  <normaloff>:/icons/9040506_grid_icon.svg</normaloff>:/icons/9040506_grid_icon.svg</iconset>
                </property>
                <property name="iconSize">
@@ -2701,7 +2826,7 @@ QSlider::sub-page:horizontal {
   </widget>
  </widget>
  <resources>
-  <include location="svg/icons.qrc"/>
+  <include location="../svg/icons.qrc"/>
  </resources>
  <connections/>
 </ui>

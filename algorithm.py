@@ -235,3 +235,33 @@ class Algorithm:
         scaled_contrast_img = np.clip(scaled_contrast_img, 0, 255).astype(np.uint8)
         scaled_contrast_img = cv2.cvtColor(scaled_contrast_img, cv2.COLOR_GRAY2RGB)
         return scaled_contrast_img
+    
+    def log(self, c, gamma, img):
+        gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        # Apply the log transformation with adjustable parameters
+        log_transformed = c * (np.log1p(gray_img) ** gamma)
+        # Scale the pixel values to the valid range (0-255)
+        log_transformed = ((log_transformed - np.min(log_transformed)) / (np.max(log_transformed) - np.min(log_transformed))) * 255
+        log_transformed = log_transformed.astype(np.uint8)
+        log_transformed = cv2.cvtColor(log_transformed, cv2.COLOR_GRAY2RGB)
+        return log_transformed
+    
+    def normalization(self, alpha, beta, img):
+        gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        normalized_img = cv2.convertScaleAbs(gray_img, alpha=alpha, beta=beta)
+        normalized_img = cv2.cvtColor(normalized_img, cv2.COLOR_GRAY2RGB)
+        return normalized_img
+    
+    def absolute(self, img):
+        gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        absolute_transformed = np.abs(gray_img)
+        absolute_transformed = cv2.cvtColor(absolute_transformed, cv2.COLOR_GRAY2RGB)
+        return absolute_transformed
+    
+    def decay(self, decay_factor, img):
+        gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        decayed_log_transformed = np.log(1 + decay_factor * gray_img)
+        decayed_log_transformed = ((decayed_log_transformed - np.min(decayed_log_transformed)) / (np.max(decayed_log_transformed) - np.min(decayed_log_transformed))) * 255
+        decayed_log_transformed = decayed_log_transformed.astype(np.uint8)
+        decayed_log_transformed = cv2.cvtColor(decayed_log_transformed, cv2.COLOR_GRAY2RGB)
+        return decayed_log_transformed
