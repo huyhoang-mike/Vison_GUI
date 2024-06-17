@@ -1,17 +1,40 @@
 from frontend.main_ui import *
-from PyQt5.QtCore import Qt, QSize, QRect
+from PyQt5.QtCore import Qt, QSize, QRect, QThread, QThreadPool
 from PyQt5.QtGui import QFont, QPixmap, QIcon, QTransform, QImage, QPainter, QBrush, QPen, QColor
 from PyQt5.QtWidgets import (QDockWidget, QApplication, QMainWindow, QGraphicsDropShadowEffect, QDockWidget, QApplication, QMainWindow, QAction, QStatusBar, QFileDialog, QScrollArea, QDoubleSpinBox, QRadioButton, QFrame,
                              QMessageBox, QPushButton, QButtonGroup, QStackedWidget, QFormLayout, QComboBox, QAbstractSpinBox, QHBoxLayout, QGroupBox,   
-                            QTextEdit, QToolBar, QGridLayout, QVBoxLayout, QLabel, QWidget, QDesktopWidget, QSpinBox, QCheckBox)
-import sys, os, cv2
+                            QTextEdit, QToolBar, QGridLayout, QVBoxLayout, QLabel, QWidget, QDesktopWidget, QSpinBox, QTextBrowser)
+import sys, os, cv2, json
 import numpy as np
 from PIL import Image, ImageDraw
 import xml.etree.ElementTree as ET
 import albumentations as A
 from algorithm import Algorithm
-from test.train import *
-from test.val import *
+from test.train import Trainer, Worker
+from test.val import Validation
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+
+# Assuming this is your JSON configuration as a string
+json_config = """
+{
+    "Augmentation": {
+        "Rotate": {"param": "angle", "value": 30},
+        "Blur": {"param": "kernel_size", "value": 5},
+        "Solarize": {"param": "threshold", "value": 128},
+        "Horizontal Flip": {"param": "probability", "value": 0.5},
+        "Vertical Flip": {"param": "probability", "value": 0.5},
+        "Crop": {"param": {"width": 100, "height": 100}}
+    },
+    "Preprocessing": {
+        "Decay log": {"param": "decay_rate", "value": 0.01},
+        "Scale by square root": {"param": "scale_factor", "value": 2.0},
+        "Log": {"param": "base", "value": 10},
+        "Normalization": {"param": {"mean": [0.485, 0.456, 0.406], "std": [0.229, 0.224, 0.225]}},
+        "Absolute": {"param": "none"}
+    }
+}
+"""
 
 class MainWindow_UI(QMainWindow):
     def __init__(self):
@@ -19,6 +42,19 @@ class MainWindow_UI(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.algorithms = Algorithm()
+
+        ###
+        self.thread_pool = QThreadPool()
+        self.validateClass = Validation()
+        # Set up the graph in the UI
+        self.figure = Figure()
+        self.canvas = FigureCanvas(self.figure)
+        self.ax = self.figure.add_subplot(111)
+        layout = QVBoxLayout()
+        layout.addWidget(self.canvas)
+        self.ui.graphWidget.setLayout(layout)
+        self.running_losses = []
+
         self.mode = 1
         self.view = 1
         self.base_img = ''
@@ -33,6 +69,13 @@ class MainWindow_UI(QMainWindow):
         self._windowPos = None
 
         self.show()
+
+    def update_training_progress(self, message):
+        self.ui.progress_label_training.setWordWrap(True)
+        self.ui.progress_label_training.setAlignment(Qt.AlignTop | Qt.AlignLeft)
+        current_text = self.ui.progress_label_training.text()
+        new_text = current_text + message + "\n"  # Add a newline at the end
+        self.ui.progress_label_training.setText(new_text)
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton and self.ui.toolbar.underMouse():
@@ -80,7 +123,8 @@ class MainWindow_UI(QMainWindow):
         self.ui.save_img.clicked.connect(self.saveImage)
         self.ui.upload_folder.clicked.connect(self.openFolder)
         self.ui.save_folder.clicked.connect(self.saveFolder)
-        self.ui.apply_changes.clicked.connect(self.apply_changes)
+        # self.ui.apply_changes.clicked.connect(self.apply_changes)
+        self.ui.apply_changes.clicked.connect(self.add)
         self.ui.upload_mask.clicked.connect(self.openMask)
         self.ui.upload_bbox.clicked.connect(self.openBBox)
         self.ui.toolButton_6.clicked.connect(self.saveBBox)
@@ -109,6 +153,97 @@ class MainWindow_UI(QMainWindow):
         self.ui.height_resize.valueChanged.connect(self.responsive)
         self.ui.width.valueChanged.connect(self.responsive)
         self.ui.height.valueChanged.connect(self.responsive)
+
+        ### traning class
+        self.ui.pushButton_4.clicked.connect(self.start_training_)
+        self.ui.pushButton_3.clicked.connect(self.performValidate)
+        self.ui.pushButton_2.clicked.connect(self.openImage_test)
+
+        self.ui.toolButton_7.clicked.connect(self.displayJSON)
+
+    def add(self):
+        if self.mode == 1:
+            # append the parameter to the json
+            """
+            if self.ui.comboBox.currentText() == "Rotate" -> param = self.ui.rotate_limit.value()
+            and so on
+            """
+            pass
+        elif self.mode == 4:
+            pass
+        elif self.mode == 7:
+            pass
+
+    def displayJSON(self):
+        # Find the QTextBrowser widget in your UI.
+        self.infoDisplay = QTextBrowser()
+        self.infoDisplay.setMinimumSize(800, 600)
+        # Load and parse the JSON configuration.
+        config = json.loads(json_config)
+
+        # Convert the JSON object to an HTML string.
+        html_content = self.json_to_html(config)
+
+        # Set the HTML content to the QTextBrowser.
+        self.infoDisplay.setHtml(html_content)
+        self.infoDisplay.show()
+
+    def json_to_html(self, json_obj):
+        html = "<html><body>"
+        for category, techniques in json_obj.items():
+            html += f"<h2>{category}</h2>"
+            for technique, params in techniques.items():
+                html += f"<p><b>{technique}:</b></p><ul>"
+                if isinstance(params['param'], dict):
+                    for key, value in params['param'].items():
+                        html += f"<li>{key}: {value}</li>"
+                else:
+                    html += f"<li>{params['param']}: {params.get('value', 'N/A')}</li>"
+                html += "</ul>"
+        html += "</body></html>"
+        return html
+
+    def performValidate(self):
+        classLabel = self.validateClass.validate(image_path='')
+        self.ui.label_31.setText(f"Predited label is {classLabel}")
+
+    def start_training_(self):
+        # Here you can define or retrieve batch size and learning rate from the UI
+        batch_size = 32  # Example batch size
+        lr = 0.001       # Example learning rate
+        
+        # Create a Worker instance and set up the Trainer with it
+        self.worker = Worker(batch_size, lr)
+        self.worker.update_signal.connect(self.update_training_progress)
+
+        # Connect the loss signal to update the graph
+        self.worker.loss_signal.connect(self.update_graph)
+
+        # Create and start the Trainer QRunnable
+        self.trainer = Trainer(self.worker)
+        self.thread_pool.start(self.trainer)
+
+    # New method to update the graph
+    def update_graph(self, running_loss):
+        # Add running loss to some list if you want to store the history
+        self.running_losses.append(running_loss)
+
+        # Update the graph
+        self.ax.clear()
+        self.ax.plot(self.running_losses, 'r-')  # Plot the running loss as a red line
+        self.ax.set_title('Running Loss')
+        self.ax.set_xlabel('Epoch')
+        self.ax.set_ylabel('Loss')
+        self.canvas.draw()
+
+    def openImage_test(self):
+        self.file, _ = QFileDialog.getOpenFileName(self, "Open Image", "C:/Users/nguyenhuyhoa/Pictures/Saved Pictures/test","")
+
+        if self.file:
+            pixmap = QPixmap(self.file)
+            self.ui.CLS_img.setPixmap(pixmap)
+        else:
+            QMessageBox.information(self, 'Error', 'Unable to open image', QMessageBox.Ok)
 
     def controlMainStack(self):
         self.ui.ac.clicked.connect(lambda: self.testLambda(1))
@@ -199,17 +334,17 @@ class MainWindow_UI(QMainWindow):
             self.ui.transform_stack.setCurrentIndex(1)
             self.mode = 6
         elif index == 7:
-            self.ui.state_label.setText("Machine Learning for Classification")
+            self.ui.state_label.setText("Deep Learning for Classification")
             self.ui.display_stack.setCurrentIndex(2)
             self.ui.transform_stack.setCurrentIndex(2)
             self.mode = 7
         elif index == 8:
-            self.ui.state_label.setText("Machine Learning for Segmentation")
+            self.ui.state_label.setText("Deep Learning for Segmentation")
             self.ui.display_stack.setCurrentIndex(0)
             self.ui.transform_stack.setCurrentIndex(0)
             self.mode = 8
         elif index == 9:
-            self.ui.state_label.setText("Machine Learning for Object Detection")
+            self.ui.state_label.setText("Deep Learning for Object Detection")
             self.ui.display_stack.setCurrentIndex(0)
             self.ui.transform_stack.setCurrentIndex(1)
             self.mode = 9
