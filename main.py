@@ -10,7 +10,8 @@ from PIL import Image, ImageDraw
 import xml.etree.ElementTree as ET
 import albumentations as A
 from algorithm import Algorithm
-
+from test.train import *
+from test.val import *
 
 class MainWindow_UI(QMainWindow):
     def __init__(self):

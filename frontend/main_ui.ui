@@ -299,15 +299,15 @@ QSlider::sub-page:horizontal {
                 <string notr="true"/>
                </property>
                <property name="currentIndex">
-                <number>1</number>
+                <number>2</number>
                </property>
                <widget class="QWidget" name="Augmentation">
                 <property name="geometry">
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>225</width>
-                  <height>205</height>
+                  <width>146</width>
+                  <height>120</height>
                  </rect>
                 </property>
                 <property name="font">
@@ -390,8 +390,8 @@ QSlider::sub-page:horizontal {
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>225</width>
-                  <height>205</height>
+                  <width>146</width>
+                  <height>120</height>
                  </rect>
                 </property>
                 <attribute name="label">
@@ -1159,7 +1159,7 @@ QSlider::sub-page:horizontal {
           <item>
            <widget class="QStackedWidget" name="transform_stack">
             <property name="currentIndex">
-             <number>0</number>
+             <number>2</number>
             </property>
             <widget class="QWidget" name="preprocess">
              <property name="minimumSize">
@@ -1983,30 +1983,89 @@ QSlider::sub-page:horizontal {
                </widget>
               </item>
               <item>
-               <widget class="QComboBox" name="comboBox_2">
-                <item>
-                 <property name="text">
-                  <string>Epochs</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Batch size</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Learning rate</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item>
                <widget class="QStackedWidget" name="stackedWidget">
                 <property name="currentIndex">
                  <number>0</number>
                 </property>
-                <widget class="QWidget" name="page_6"/>
+                <widget class="QWidget" name="page_6">
+                 <layout class="QVBoxLayout" name="verticalLayout_32">
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_28">
+                    <item>
+                     <widget class="QLabel" name="label_21">
+                      <property name="text">
+                       <string>Batch size</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QSpinBox" name="spinBox"/>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_29">
+                      <property name="text">
+                       <string>Epoch</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QSpinBox" name="spinBox_2"/>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_30">
+                      <property name="text">
+                       <string>Learning rate</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QSpinBox" name="spinBox_3"/>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_32">
+                      <property name="text">
+                       <string>Choose pretrained model</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QComboBox" name="comboBox_2">
+                      <item>
+                       <property name="text">
+                        <string>Resnet</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>Yolov8</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>ImageNet</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>Vgg-16</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>Inception</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>GoogleNet</string>
+                       </property>
+                      </item>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </widget>
                 <widget class="QWidget" name="page_7"/>
                </widget>
               </item>
@@ -2017,7 +2076,7 @@ QSlider::sub-page:horizontal {
           <item>
            <widget class="QStackedWidget" name="display_stack">
             <property name="currentIndex">
-             <number>0</number>
+             <number>2</number>
             </property>
             <widget class="QWidget" name="obj_cls">
              <layout class="QVBoxLayout" name="verticalLayout_10">
@@ -2570,6 +2629,12 @@ QSlider::sub-page:horizontal {
              <layout class="QVBoxLayout" name="verticalLayout_26">
               <item>
                <widget class="QLabel" name="label_20">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>20</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string>Training process</string>
                 </property>
@@ -2578,24 +2643,42 @@ QSlider::sub-page:horizontal {
               <item>
                <widget class="QProgressBar" name="progressBar">
                 <property name="value">
-                 <number>24</number>
+                 <number>0</number>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="label_21">
+               <widget class="QPushButton" name="pushButton">
                 <property name="text">
-                 <string>Estimated time</string>
+                 <string>Export model</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLCDNumber" name="lcdNumber">
+               <widget class="QPushButton" name="pushButton_2">
+                <property name="text">
+                 <string>Upload Image</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_3">
+                <property name="text">
+                 <string>Predict</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPlainTextEdit" name="plainTextEdit">
                 <property name="maximumSize">
                  <size>
                   <width>16777215</width>
-                  <height>40</height>
+                  <height>100</height>
                  </size>
+                </property>
+                <property name="plainText">
+                 <string>Result:
+</string>
                 </property>
                </widget>
               </item>
