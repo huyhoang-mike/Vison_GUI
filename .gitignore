@@ -3,3 +3,4 @@ svg
 virtualenv
 frontend/__pycache__
 test
+test/__pycache__

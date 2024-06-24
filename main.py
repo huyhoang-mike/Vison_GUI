@@ -1,4 +1,4 @@
-from frontend.main_ui import *
+from frontend.ui import *
 from PyQt5.QtCore import Qt, QSize, QRect, QThread, QThreadPool
 from PyQt5.QtGui import QFont, QPixmap, QIcon, QTransform, QImage, QPainter, QBrush, QPen, QColor
 from PyQt5.QtWidgets import (QDockWidget, QApplication, QMainWindow, QGraphicsDropShadowEffect, QDockWidget, QApplication, QMainWindow, QAction, QStatusBar, QFileDialog, QScrollArea, QDoubleSpinBox, QRadioButton, QFrame,
@@ -43,17 +43,16 @@ class MainWindow_UI(QMainWindow):
         self.ui.setupUi(self)
         self.algorithms = Algorithm()
 
-        ###
         self.thread_pool = QThreadPool()
         self.validateClass = Validation()
-        # Set up the graph in the UI
+        
+        
         self.figure = Figure()
         self.canvas = FigureCanvas(self.figure)
         self.ax = self.figure.add_subplot(111)
         layout = QVBoxLayout()
         layout.addWidget(self.canvas)
-        self.ui.graphWidget.setLayout(layout)
-        self.running_losses = []
+        self.ui.graphWidget.setLayout(layout)  # Assuming you have graphWidget to hold the graph
 
         self.mode = 1
         self.view = 1
@@ -123,8 +122,6 @@ class MainWindow_UI(QMainWindow):
         self.ui.save_img.clicked.connect(self.saveImage)
         self.ui.upload_folder.clicked.connect(self.openFolder)
         self.ui.save_folder.clicked.connect(self.saveFolder)
-        # self.ui.apply_changes.clicked.connect(self.apply_changes)
-        self.ui.apply_changes.clicked.connect(self.add)
         self.ui.upload_mask.clicked.connect(self.openMask)
         self.ui.upload_bbox.clicked.connect(self.openBBox)
         self.ui.toolButton_6.clicked.connect(self.saveBBox)
@@ -140,7 +137,6 @@ class MainWindow_UI(QMainWindow):
         self.ui.mean_value.valueChanged.connect(self.responsive)
         self.ui.rotate_limit.valueChanged.connect(self.responsive)
         self.ui.solarize_value.valueChanged.connect(self.responsive)
-
         self.ui.mean_shift.valueChanged.connect(self.responsive)
         self.ui.scale_limit.valueChanged.connect(self.responsive)
         self.ui.scale_factor.valueChanged.connect(self.responsive)
@@ -148,7 +144,6 @@ class MainWindow_UI(QMainWindow):
         self.ui.decay_factor.valueChanged.connect(self.responsive)
         self.ui.alpha_value.valueChanged.connect(self.responsive)
         self.ui.beta_value.valueChanged.connect(self.responsive)
-
         self.ui.width_resize.valueChanged.connect(self.responsive)
         self.ui.height_resize.valueChanged.connect(self.responsive)
         self.ui.width.valueChanged.connect(self.responsive)
@@ -215,33 +210,38 @@ class MainWindow_UI(QMainWindow):
         # Create a Worker instance and set up the Trainer with it
         self.worker = Worker(batch_size, lr)
         self.worker.update_signal.connect(self.update_training_progress)
-
-        # Connect the loss signal to update the graph
-        self.worker.loss_signal.connect(self.update_graph)
+        self.worker.update_graph_signal.connect(self.update_graph)
 
         # Create and start the Trainer QRunnable
         self.trainer = Trainer(self.worker)
         self.thread_pool.start(self.trainer)
 
-    # New method to update the graph
-    def update_graph(self, running_loss):
-        # Add running loss to some list if you want to store the history
-        self.running_losses.append(running_loss)
+    def update_graph(self, train_losses, train_accuracies, validation_losses, validation_accuracies):
+        self.ax.clear()  # Clear previous figures
+        epochs = range(1, len(train_losses) + 1)
 
-        # Update the graph
-        self.ax.clear()
-        self.ax.plot(self.running_losses, 'r-')  # Plot the running loss as a red line
-        self.ax.set_title('Running Loss')
-        self.ax.set_xlabel('Epoch')
-        self.ax.set_ylabel('Loss')
+        # Plot Training Loss and Accuracy
+        self.ax.plot(epochs, train_losses, 'b-', label='Training loss')
+        self.ax.plot(epochs, train_accuracies, 'g-', label='Training accuracy')
+
+        # Plot Validation Loss and Accuracy (extend lists to match epochs)
+        val_epochs = range(1, len(validation_losses) + 1)
+        self.ax.plot(val_epochs, validation_losses, 'r--', label='Validation loss')
+        self.ax.plot(val_epochs, validation_accuracies, 'm--', label='Validation accuracy')
+
+        self.ax.set_xlabel('Epochs')
+        self.ax.set_ylabel('Metrics')
+        self.ax.set_title('Training and Validation Metrics')
+        self.ax.legend()
         self.canvas.draw()
 
     def openImage_test(self):
         self.file, _ = QFileDialog.getOpenFileName(self, "Open Image", "C:/Users/nguyenhuyhoa/Pictures/Saved Pictures/test","")
-
+        self.ui.label_31.setText('This is a cat')
         if self.file:
             pixmap = QPixmap(self.file)
             self.ui.CLS_img.setPixmap(pixmap)
+            self.ui.CLS_img.setAlignment(Qt.AlignCenter)
         else:
             QMessageBox.information(self, 'Error', 'Unable to open image', QMessageBox.Ok)
 
